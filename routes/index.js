@@ -8,7 +8,17 @@ router.get('/', function(req, res) {
 
 /* GET game page */
 router.get('/play', function(req, res) {
-	res.render('play', { title: "Play Bohnanza" });
+	
+	var json = { title: "Bohnanza!!!!!!" };
+	
+	res.render('play', json);
+
 });
+
+/* transact between players */
+
+// router.get('/generate', function(req, res) {
+// 	res.render
+// });
 
 module.exports = router;

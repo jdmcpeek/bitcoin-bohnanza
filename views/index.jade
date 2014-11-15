@@ -1,6 +1,10 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}. I am a monkey.
-  a(href='/play') Start playing your game here.
+	h1= title
+	p Welcome to #{title}. I am a monkey.
+	form(name="login", action="/play", method="get")
+		input(type="text", name="user", placeholder="what is your full name")
+		input(type="submit", name="submit")
+			
+	
