@@ -1,12 +1,15 @@
 extends layout
 
 block content
-	h1= title
-	p Welcome to #{title}. I am a monkey.
-	div(class="inputs")
-		input(type="text", name="user", placeholder="what is your full name", class="username")
-		input(type="submit", name="submit", class="submit" )
-	select(name="player" class="player")
+	section(class="masthead")
+		h1= title
+		p Welcome to #{title}. I am a monkey.
+		div(class="inputs")
+			input(type="text", name="user", placeholder="what is your full name", class="username")
+			input(type="submit", name="submit", class="submit" )
+		select(name="player" class="player")
+
+
     
 
 			

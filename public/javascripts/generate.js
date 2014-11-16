@@ -1,3 +1,24 @@
+$(document).ready(function() {
+	$(".submit").click(function() {
+		$("select").append(function() {
+				var input = $(".username").val();
+				var option = "<option value='" + input + "'>" + input + "</option>";
+				console.log(input);
+				return option;
+		});
+		$("body").append("div").addClass("players")
+				 .append(function() {
+					var input = $(".username").val();
+					var div = document.createElement("p");
+					var player = "<p>" + input + "</p>";
+					console.log(input);
+					return player;
+		});		
+	});
+});
+
+
+
 // var pusher = new Pusher({ appId: APP_ID, key: APP_KEY, secret: APP_SECRET });
 // pusher.trigger( channels, event, data, socketId, callback );
 
@@ -21,16 +42,6 @@
 // });
 
 
-$(document).ready(function() {
-	$(".submit").click(function() {
-		$("select").append(function() {
-				var input = $(".username").val();
-				var option = "<option value='" + input + "'>" + input + "</option>";
-				console.log(input);
-				return option;
-		});
-	});
-});
 
 
 var generate_address = function() {
