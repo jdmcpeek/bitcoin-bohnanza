@@ -1,21 +1,37 @@
 $(document).ready(function() {
+
+	$(".players").hide();
+
 	$(".submit").click(function() {
+
 		$("select").append(function() {
-				var input = $(".username").val();
-				var option = "<option value='" + input + "'>" + input + "</option>";
-				console.log(input);
-				return option;
+
+			var input = $(".username").val();
+
+			var option = "<option value='" + input + "'>" + input + "</option>";
+
+			console.log(input);
+
+			return option;
+
 		});
-		$("body").append("div").addClass("players")
-				 .append(function() {
-					var input = $(".username").val();
-					var div = document.createElement("p");
-					var player = "<p>" + input + "</p>";
-					console.log(input);
-					return player;
-		});		
+
+		$(".players").append(function() {
+
+			var input = $(".username").val();
+
+			var player = "<p>" + input + "</p>";
+
+			console.log(input);
+
+			return player;
+
+		}).show();
+
 	});
+	
 });
+
 
 
 
