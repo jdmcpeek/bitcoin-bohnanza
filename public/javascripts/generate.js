@@ -1,38 +1,20 @@
 $(document).ready(function() {
-
 	$(".players").hide();
-
 	$(".submit").click(function() {
-
-		$("select").append(function() {
-
-			var input = $(".username").val();
-
-			var option = "<option value='" + input + "'>" + input + "</option>";
-
-			console.log(input);
-
-			return option;
-
-		});
-
+		// $("select").append(function() {
+		// 	var input = $(".username").val();
+		// 	var option = "<option value='" + input + "'>" + input + "</option>";
+		// 	console.log(input);
+		// 	return option;
+		// });
 		$(".players").append(function() {
-
 			var input = $(".username").val();
-
 			var player = "<p>" + input + "</p>";
-
 			console.log(input);
-
 			return player;
-
 		}).show();
-
 	});
-	
 });
-
-
 
 
 // var pusher = new Pusher({ appId: APP_ID, key: APP_KEY, secret: APP_SECRET });
