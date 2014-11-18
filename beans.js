@@ -53,6 +53,7 @@ beans.blackeyed = function(card) {
 
 beans.red = function(card) {
 	var card = new this.protobean("red bean", 8, 2, 3, 4, 5);
+	return card;
 }
 
 beans.garden = function(card) {

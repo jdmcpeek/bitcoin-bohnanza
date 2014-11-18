@@ -17,26 +17,18 @@ deck.garden = { "total": 6, "cards": [] };
 deck.cocoa = { "total": 4, "cards": [] };
 
 
-
 deck.makedeck = function() {
 
 	for (var bohn in this) {
-
-			// for (var i = 0; i < bohn.total; i++) {
-			// 	this[bohn][cards].push("beans[bohn](bohn)");
-			// }
-
-			if (this.hasOwnProperty(bohn)) {
-
-				// this[bohn]["cards"].push("fun");
-				// console.log(this[bohn]["cards"]);
-
-				console.log(this[bohn]);
-
+		if (typeof bohn != 'undefined' || typeof bohn != 'function') {
+			for (var i = 0; i < this[bohn].total; i++) {
+				var new_card = beans[bohn](bohn);
+				this[bohn].cards.push(new_card);
 			}
-
+		}
 	}
-	// return this;
+
+	return this.red;
 };
 
 console.log(deck.makedeck());
