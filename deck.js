@@ -18,7 +18,6 @@ deck.cocoa = { "total": 4, "cards": [] };
 
 
 deck.makedeck = function() {
-
 	for (var bohn in this) {
 		if (typeof bohn != 'undefined' || typeof bohn != 'function') {
 			for (var i = 0; i < this[bohn].total; i++) {
@@ -27,8 +26,7 @@ deck.makedeck = function() {
 			}
 		}
 	}
-
-	return this.red;
+	return this;
 };
 
 console.log(deck.makedeck());
