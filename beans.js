@@ -15,6 +15,7 @@ beans.coffee = function(card) {
 	return card;
 };
 
+
 beans.wax = function(card) {
 	var card = new this.protobean("wax bean", 22, 4, 7, 9, 11);
 	return card;
@@ -66,7 +67,5 @@ beans.cocoa = function(card) {
 
 
 
+
 module.exports = beans;
-
-
-
