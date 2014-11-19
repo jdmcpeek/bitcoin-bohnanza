@@ -7,8 +7,35 @@ a {
   color: #00B7FF;
 }
 
+
+.masthead {
+	border: solid;
+	border-color: black;
+	border-width: 2px;
+	position: absolute;
+	left: 3em;
+	width: 40%;
+	padding: 2em;
+}
+
+input {
+  margin-left: 2em;
+  margin-right: 2em;
+}
+
+.sessions {
+    width: 40%;
+    height: 7em;
+    border-color: black;
+    border: solid;
+    position: absolute;
+    right: 3em;
+    top: 25em;
+    padding: 2em;
+
+}
 .players {
-	border: solid; 
+	border: solid;
 	border-color: black;
 	border-width: 2px;
 	position: absolute;
@@ -16,14 +43,4 @@ a {
 	width: 40%;
 	padding: 2em;
 
-}
-
-.masthead {
-	border: solid; 
-	border-color: black;
-	border-width: 2px;
-	position: absolute;
-	left: 3em;
-	width: 40%;
-	padding: 2em;
 }

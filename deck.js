@@ -1,7 +1,5 @@
 var beans = require('./beans');
 
-// console.log(beans.coffee("hey"));
-
 var deck = {};
 
 deck.coffee = { "total": 24, "cards": [] };

@@ -1,0 +1,11 @@
+Todo:
+1. Define deck size by the number of game participants.
+2. Only two pages:
+  a. enter game -> '/'
+  b. play game -> '/:channel'
+  It's as simple as that.
+3. Live updates of present game sessions + players online
+4. messaging system for players in-game
+
+Questions:
+1. Are sessions necessary?

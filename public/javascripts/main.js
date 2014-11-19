@@ -1,12 +1,6 @@
 $(document).ready(function() {
-	$(".players").hide();
+	// $(".players").hide();
 	$(".submit").click(function() {
-		// $("select").append(function() {
-		// 	var input = $(".username").val();
-		// 	var option = "<option value='" + input + "'>" + input + "</option>";
-		// 	console.log(input);
-		// 	return option;
-		// });
 		$(".players").append(function() {
 			var input = $(".username").val();
 			var player = "<p>" + input + "</p>";
@@ -54,5 +48,5 @@ var generate_address = function() {
 	// Print your public key (toString defaults to a Bitcoin address)
 	// console.log(key.pub.getAddress().toString())
 	// => 14bZ7YWde4KdRb5YN7GYkToz3EHVCvRxkF
-        
+
 };

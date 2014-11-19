@@ -1,17 +1,20 @@
 extends layout
 
 block content
+	h1= title
+	p Welcome to #{title}. Set up your game here. It's that easy.
 	section(class="masthead")
-		h1= title
-		p Welcome to #{title}. I am a monkey.
 		div(class="inputs")
-			input(type="text", name="user", placeholder="what is your full name", class="username")
-			input(type="submit", name="submit", class="submit" )
-		form(action="/play")
-			input(type="submit", value="play game")
+			form(action="/play/:session")
+				input(type="text" name="session_name" placeholder="What's the name of the game?")
+				input(type="text" name="player_name" placeholder="What shall we call you, son?" class="username")
+				input(type="submit" name="create_session" value="Let's play some Nanz!")
 
 		//- select(name="player" class="player")
 	section(class="players")
+		p This is where you'll see other players playing online. Cool, aren't they?
+	section(class="sessions")
+		p This is where you'll see games being played. Cool, isn't it? 
 
 
     
