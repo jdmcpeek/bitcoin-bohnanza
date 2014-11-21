@@ -1,4 +1,23 @@
 var mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost/bohnanza');
+var db = mongoose.connection;
+
+var beansSchema = new mongoose.Schema({
+	name: 'string',
+	owner: 'string',
+	one_gold: 'number',
+	two_gold: 'number',
+	three_gold: 'number',
+	four_gold: 'number'
+});
+
+var Bean = new mongoose.model('Bean', beansSchema);
+
+
+
+
+
 var beans = {};
 
 beans.protobean = function(name, num1, num2, num3, num4, owner) {
