@@ -3,16 +3,119 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/bohnanza');
 var db = mongoose.connection;
 
-var beansSchema = new mongoose.Schema({
-	name: 'string',
-	owner: 'string',
-	one_gold: 'number',
-	two_gold: 'number',
-	three_gold: 'number',
-	four_gold: 'number'
+var beanSchema = Schema({
+	type: String,
+	owner: String,
+	gold_I: Number,
+	gold_II: Number,
+	gold_III: Number,
+	gold_IV: Number
 });
 
-var Bean = new mongoose.model('Bean', beansSchema);
+var Bean = mongoose.model('Bean', beanSchema);
+
+var coffee = new Bean({
+	type: 'coffee',
+	owner: 'deck',
+	gold_I: 4,
+	gold_II: 7,
+	gold_III: 10,
+	gold_IV: 12
+});
+
+var wax = new Bean({
+	type: 'wax',
+	owner: 'deck',
+	gold_I: 4,
+	gold_II: 7,
+	gold_III: 9,
+	gold_IV: 11
+});
+
+var blue = new Bean({
+	type: 'blue',
+	owner: 'deck',
+	gold_I: 4,
+	gold_II: 6,
+	gold_III: 8,
+	gold_IV: 10
+});
+
+var chili = new Bean({
+	type: 'chili',
+	owner: 'deck',
+	gold_I: 3,
+	gold_II: 6,
+	gold_III: 8,
+	gold_IV: 9
+});
+
+var stink = new Bean({
+	type: 'stink',
+	owner: 'deck',
+	gold_I: 3,
+	gold_II: 5,
+	gold_III: 7,
+	gold_IV: 8
+});
+
+var green = new Bean({
+	type: 'green',
+	owner: 'deck',
+	gold_I: 3,
+	gold_II: 5,
+	gold_III: 6,
+	gold_IV: 7
+});
+
+var soy = new Bean({
+	type: 'soy',
+	owner: 'deck',
+	gold_I: 2,
+	gold_II: 4,
+	gold_III: 6,
+	gold_IV: 7
+});
+
+var blackeyed = new Bean({
+	type: 'blackeyed',
+	owner: 'deck',
+	gold_I: 2,
+	gold_II: 4,
+	gold_III: 5,
+	gold_IV: 6
+});
+
+var red = new Bean({
+	type: 'red',
+	owner: 'deck',
+	gold_I: 2,
+	gold_II: 3,
+	gold_III: 4,
+	gold_IV: 5
+});
+
+var garden = new Bean({
+	type: 'garden',
+	owner: 'deck',
+	gold_I: 1000,
+	gold_II: 2,
+	gold_III: 3,
+	gold_IV: 1000
+});
+
+var cocoa = new Bean({
+	type: 'garden',
+	owner: 'deck',
+	gold_I: 1000,
+	gold_II: 2,
+	gold_III: 3,
+	gold_IV: 4
+});
+
+
+
+
 
 
 
