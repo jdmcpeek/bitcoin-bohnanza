@@ -2,6 +2,11 @@ var beans = require('./beans');
 
 var deck = {};
 
+deck.deckSchema = new Schema({
+	channel: String,
+	total: 
+});
+
 deck.coffee = { "total": 24, "cards": [] };
 deck.wax = { "total": 22, "cards": [] };
 deck.blue = { "total": 20, "cards": [] };
