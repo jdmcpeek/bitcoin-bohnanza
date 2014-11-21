@@ -1,27 +1,35 @@
+var mongoose = require('mongoose');
+
+var Schema = mongoose.Schema;
+
 var beans = require('./beans');
 
 var deck = {};
 
 deck.deckSchema = new Schema({
 	channel: String,
-	total: 
+	cards: Array
 });
 
-deck.coffee = { "total": 24, "cards": [] };
-deck.wax = { "total": 22, "cards": [] };
-deck.blue = { "total": 20, "cards": [] };
-deck.chili = { "total": 18, "cards": [] };
-deck.stink = { "total": 16, "cards": [] };
-deck.green = { "total": 14, "cards": [] };
-deck.soy = { "total": 12, "cards": [] };
-deck.blackeyed = { "total": 10, "cards": [] };
-deck.red = { "total": 8, "cards": [] };
-deck.garden = { "total": 6, "cards": [] };
-deck.cocoa = { "total": 4, "cards": [] };
+deck.totals = {
+	"coffee": 24,
+	"wax": 22,
+	"blue": 20,
+	"chili": 18,
+	"stink": 16,
+	"green": 14,
+	"soy": 12,
+	"blackeyed": 10,
+	"red": 8,
+	"garden": 6,
+	"cocoa": 4
+};
 
 
+console.log(this.totals);
+process.exit();
 deck.makedeck = function() {
-	for (var bohn in this) {
+	for (var bohn in this.totals) {
 		if (typeof bohn != 'undefined' || typeof bohn != 'function') {
 			for (var i = 0; i < this[bohn].total; i++) {
 				var new_card = beans[bohn](bohn);

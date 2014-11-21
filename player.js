@@ -3,11 +3,14 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/bohnanza');
 var db = mongoose.connection;
 
+var players = {};
 
-var playerSchema = Schema({
+players.playerSchema = Schema({
   _id: Number,
   name: String,
   cards: Array
 });
 
-var player = mongoose.model('Player', playerSchema);
+players.player = mongoose.model('Player', playerSchema);
+
+module.exports = players; 
