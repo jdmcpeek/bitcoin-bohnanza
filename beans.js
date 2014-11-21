@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/bohnanza');
+// mongoose.connect('mongodb://localhost/bohnanza');
 var db = mongoose.connection;
-var Schema = mongoose.schema;
+var Schema = mongoose.Schema;
 
 var beans = {};
 
@@ -14,7 +14,7 @@ beans.beanSchema = new Schema({
 	gold_IV: Number
 });
 
-beans.protobean = mongoose.model('Bean', beanSchema);
+beans.protobean = mongoose.model('Bean', this.beanSchema);
 
 beans.coffee = {
 	"type": "coffee",
