@@ -4,6 +4,46 @@ var db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
+var Schema = mongoose.Schema;
+
+var beanSchema = new Schema({
+	type: String,
+	owner: String,
+	gold_I: Number,
+	gold_II: Number,
+	gold_III: Number,
+	gold_IV: Number
+});
+
+var Bean = mongoose.model('Bean', beanSchema);
+
+var wax = new Bean({
+	"type": "wax",
+	"owner": "deck",
+	"gold_I": 4,
+	"gold_II": 7,
+	"gold_III": 9,
+	"gold_IV": 11
+});
+
+
+db.beans.save(wax);
+
+// wax.save(function (err, wax) {
+// 	if (err) return console.error(err);
+// 	console.log(wax.type);
+// });
+
+
+});
+
+process.exit();
+
+
+
+
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback () {
 	console.log('opened db successfully');
 	var Schema = mongoose.Schema;
 
@@ -28,7 +68,7 @@ db.once('open', function callback () {
 	});
 
 
-	coffee.save(function (err, coffee) {
+	wax.save(function (err, wax) {
 		if (err) return console.error(err);
 		console.log(coffee.type);
 	});
@@ -42,7 +82,7 @@ db.once('open', function callback () {
 });
 
 // var search = db.beans.find();
-console.log(db);
+// console.log(db);
 
 // console.log(search);
 
