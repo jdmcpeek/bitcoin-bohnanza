@@ -7,6 +7,33 @@ db.once('open', function callback () {
 	console.log('opened db successfully');
 	var Schema = mongoose.Schema;
 
+	var beanSchema = new Schema({
+		type: String,
+		owner: String,
+		gold_I: Number,
+		gold_II: Number,
+		gold_III: Number,
+		gold_IV: Number
+	});
+
+	var Bean = mongoose.model('Bean', beanSchema);
+
+	var wax = new Bean({
+		"type": "wax",
+		"owner": "deck",
+		"gold_I": 4,
+		"gold_II": 7,
+		"gold_III": 9,
+		"gold_IV": 11
+	});
+
+
+	coffee.save(function (err, coffee) {
+		if (err) return console.error(err);
+		console.log(coffee.type);
+	});
+
+
 
 
 
@@ -14,8 +41,13 @@ db.once('open', function callback () {
 
 });
 
+// var search = db.beans.find();
+console.log(db);
+
+// console.log(search);
 
 
+process.exit();
 
 
 var beans = {};
