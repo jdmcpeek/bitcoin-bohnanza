@@ -3,8 +3,8 @@ mongoose.connect('mongodb://localhost/bohnanza');
 var db = mongoose.connection;
 
 
-// db.on('error', console.error.bind(console, 'connection error:'));
-// db.once('open', function callback () {
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback () {
 
 	var Schema = mongoose.Schema;
 
@@ -28,18 +28,16 @@ var db = mongoose.connection;
 		"gold_IV": 11
 	});
 
-	console.log("this will come first");
-
 
 	black.save(function (err, black) {
 		if (err) return console.error(err);
 		console.log(black.type);
-		console.log('save, bitches!');
+		console.log('your bean is saved!');
 	});
 
-// });
+});
 
-console.log('testing testing testing');
+
 
 
 
