@@ -11,6 +11,8 @@ deck.deckSchema = new Schema({
 	cards: Array
 });
 
+deck.new_deck = mongoose.model('Deck', this.deckSchema);
+
 deck.totals = {
 	"coffee": 24,
 	"wax": 22,
@@ -29,15 +31,17 @@ deck.totals = {
 console.log(this.totals);
 process.exit();
 deck.makedeck = function() {
+	var new_deck = new Deck('default_channel', []);
 	for (var bohn in this.totals) {
-		if (typeof bohn != 'undefined' || typeof bohn != 'function') {
-			for (var i = 0; i < this[bohn].total; i++) {
-				var new_card = beans[bohn](bohn);
-				this[bohn].cards.push(new_card);
+		// if (typeof bohn != 'undefined' || typeof bohn != 'function') {
+			for (var i = 0; i < this[bohn]; i++) {
+				var new_card = new Bean(beans[bohn]);
+				new_deck.push(new_card);
 			}
-		}
+		// }
 	}
 	return this;
+	// return new_deck;
 };
 
 console.log(deck.makedeck());
