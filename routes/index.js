@@ -5,7 +5,7 @@ var deck = require('../deck');
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { title: 'BitCoin Bohnanza' });
+  res.render('index', { title: 'weB-ohnanza' });
 });
 
 /* create a new session, possibly a socket.io channel */
