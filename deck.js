@@ -29,7 +29,7 @@ deck.totals = {
 
 
 console.log(this.totals);
-process.exit();
+
 deck.makedeck = function() {
 	var new_deck = new Deck('default_channel', []);
 	for (var bohn in this.totals) {
