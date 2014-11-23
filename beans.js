@@ -1,7 +1,22 @@
 var mongoose = require('mongoose');
-// mongoose.connect('mongodb://localhost/bohnanza');
+mongoose.connect('mongodb://localhost/bohnanza');
 var db = mongoose.connection;
-var Schema = mongoose.Schema;
+
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback () {
+	console.log('opened db successfully');
+	var Schema = mongoose.Schema;
+
+
+
+
+
+
+});
+
+
+
+
 
 var beans = {};
 
@@ -14,7 +29,8 @@ beans.beanSchema = new Schema({
 	gold_IV: Number
 });
 
-beans.protobean = mongoose.model('Bean', this.beanSchema);
+beans.protobean = mongoose.model('Bean', beans.beanSchema);
+
 
 beans.coffee = {
 	"type": "coffee",
@@ -24,6 +40,20 @@ beans.coffee = {
 	"gold_III": 10,
 	"gold_IV": 12
 };
+
+var err = "failed to save";
+var coffee = new beans.protobean(beans.coffee);
+coffee.save(function (err, coffee) {
+	if (err) return console.error(err);
+	console.log(coffee._id());
+});
+
+console.log("test");
+
+// for (var i; i < 5; i++) {
+// 	new beans.protobean(beans.coffee);
+// }
+// console.log(coffee);
 
 beans.wax = {
 	"type": "wax",
