@@ -3,7 +3,8 @@ var beans = {};
 var Schema = mongoose.Schema;
 
 beans.beans_schema = new Schema({
-	type: String,
+	//we really need only 1 id per type...
+	_id: String,
 	gold_I: Number,
 	gold_II: Number,
 	gold_III: Number,
@@ -17,7 +18,7 @@ beans.new = function (type) {
 	// if type isn't a key in types this is gonna be ugly.
 	types = {
 		"black-eyed": {
-			"type": "blackeyed",
+			"_id": "black-eyed",
 			"gold_I": 2,
 			"gold_II": 4,
 			"gold_III": 5,
@@ -25,7 +26,7 @@ beans.new = function (type) {
 		},
 
 	 "blue": {
-			"type": "blue",
+			"_id": "blue",
 			"gold_I": 4,
 			"gold_II": 6,
 			"gold_III": 8,
@@ -33,7 +34,7 @@ beans.new = function (type) {
 		},
 
 		"chili" : {
-			"type": "chili",
+			"_id": "chili",
 			"gold_I": 3,
 			"gold_II": 6,
 			"gold_III": 8,
@@ -41,7 +42,7 @@ beans.new = function (type) {
 		},
 
 		"cocoa" : {
-			"type": "garden",
+			"_id": "garden",
 			"gold_I": 1000,
 			"gold_II": 2,
 			"gold_III": 3,
@@ -49,7 +50,7 @@ beans.new = function (type) {
 		},
 
 		"coffee" : {
-			"type": "coffee",
+			"_id": "coffee",
 			"gold_I": 4,
 			"gold_II": 7,
 			"gold_III": 10,
@@ -57,7 +58,7 @@ beans.new = function (type) {
 		},
 
 		"garden" : {
-			"type": "garden",
+			"_id": "garden",
 			"gold_I": 1000,
 			"gold_II": 2,
 			"gold_III": 3,
@@ -65,7 +66,7 @@ beans.new = function (type) {
 		},
 
 		"green" : {
-			"type": "green",
+			"_id": "green",
 			"gold_I": 3,
 			"gold_II": 5,
 			"gold_III": 6,
@@ -73,7 +74,7 @@ beans.new = function (type) {
 		},
 
 		"soy" : {
-			"type": "soy",
+			"_id": "soy",
 			"gold_I": 2,
 			"gold_II": 4,
 			"gold_III": 6,
@@ -81,7 +82,7 @@ beans.new = function (type) {
 		},
 
 		"stink" : {
-			"type": "stink",
+			"_id": "stink",
 			"gold_I": 3,
 			"gold_II": 5,
 			"gold_III": 7,
@@ -89,7 +90,7 @@ beans.new = function (type) {
 		},
 
 		"red" : {
-			"type": "red",
+			"_id": "red",
 			"gold_I": 2,
 			"gold_II": 3,
 			"gold_III": 4,
@@ -97,7 +98,7 @@ beans.new = function (type) {
 		},
 
 		"wax" : {
-			"type": "wax",
+			"_id": "wax",
 			"gold_I": 4,
 			"gold_II": 7,
 			"gold_III": 9,
