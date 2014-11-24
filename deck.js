@@ -8,8 +8,7 @@ deck.deck_schema = new Schema({
 	cards: [beans.beans_schema]
 });
 
-var model = mongoose.model('Deck', deck.deck_schema);
-deck.make_deck = function() {
+deck.deck_schema.methods.init = function() {
 	totals = {
 		"coffee": 24,
 		"wax": 22,
@@ -23,25 +22,27 @@ deck.make_deck = function() {
 		"garden": 6,
 		"cocoa": 4
 	};
-	var new_deck = model({channel: 'default_channel', cards: []});
+
 	for (var bohn in totals) {
 		for (var i=0; i < totals[bohn]; i++) {
 			var new_card = beans.new(bohn);
-			new_deck.cards.push(new_card);
+			this.cards.push(new_card);
 		}
 	}
-	//Shuffle?
-	return new_deck;
 };
 
+var model = mongoose.model('Deck', deck.deck_schema);
 
 //I'm not sure this code should live here, but this is demonstrative
 mongoose.connect('mongodb://localhost/test');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
+	console.log("Instantiating deck.")
+	var new_deck = new model;
+	console.log(new_deck);
 	console.log("Generating new deck:");
-	var new_deck = deck.make_deck();
+	new_deck.init();
 	console.log(new_deck);
 	//ignoring error handling
 	new_deck.save();
