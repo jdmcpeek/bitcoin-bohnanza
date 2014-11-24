@@ -1,21 +1,12 @@
 var mongoose = require('mongoose');
-var bean = {};
 var Schema = mongoose.Schema;
 
-bean.schema = new Schema({
-	//we really need only 1 id per type...
-	_id: String,
-	gold_I: Number,
-	gold_II: Number,
-	gold_III: Number,
-	gold_IV: Number
+var schema = new Schema({
+	type: String
 });
 
-// This is essentialy a private constructor
-var model = mongoose.model('Bean', bean.schema);
-
-bean.new = function (type) {
-	// if type isn't a key in types this is gonna be ugly.
+// This way we only store an _id and the type
+schema.methods.map = function() {
 	types = {
 		"black-eyed": {
 			"_id": "black-eyed",
@@ -25,7 +16,7 @@ bean.new = function (type) {
 			"gold_IV": 6
 		},
 
-	 "blue": {
+	"blue": {
 			"_id": "blue",
 			"gold_I": 4,
 			"gold_II": 6,
@@ -104,9 +95,8 @@ bean.new = function (type) {
 			"gold_III": 9,
 			"gold_IV": 11
 		}
-	};
-
-	return new model(types[type]);
+	}
+	return types[this.type];
 };
 
-module.exports = bean;
+module.exports = mongoose.model('Bean', schema);
