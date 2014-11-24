@@ -11,5 +11,5 @@ var playerSchema = Schema({
   gold: Number
 });
 
-players.player = mongoose.model('Player', playerSchema);
+players.player = mongoose.model('Player', playerSchema); 
 module.exports = players;
