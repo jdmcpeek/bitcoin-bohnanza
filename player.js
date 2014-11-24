@@ -1,15 +1,18 @@
 var mongoose = require('mongoose');
-var players = {};
-var beans = require('./beans');
-var player_schema = Schema({
+var beans = require('./bean');
+var Schema = mongoose.Schema;
+var player = {};
+
+player.schema = new Schema({
+  //could hold _id = name
   name: String,
-  hand: [beans.beans_schema],
-  plot0: [beans.beans_schema],
-  plot1: [beans.beans_schema],
+  hand: [beans.schema],
+  plot0: [beans.schema],
+  plot1: [beans.schema],
   //plot2: can be added on update.
   //http://docs.mongodb.org/manual/reference/operator/update/set/
   gold: Number
 });
 
-players.player = mongoose.model('Player', player_schema);
-module.exports = players;
+player.model = mongoose.model('Player', player.schema);
+module.exports = player;

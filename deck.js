@@ -20,6 +20,7 @@ deck.deck_schema.methods.add = function(cards) {
 
 //Pops the first card off the deck and returns it
 deck.deck_schema.methods.draw = function() {
+		//what happens if there are no cards left in deck?
 		return this.cards.pop();
 }
 
