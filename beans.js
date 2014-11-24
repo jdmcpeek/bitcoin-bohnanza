@@ -107,6 +107,6 @@ beans.new = function (type) {
 	};
 
 	return new model(types[type]);
-}
+};
 
 module.exports = beans;
