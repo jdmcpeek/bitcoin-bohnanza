@@ -1,11 +1,11 @@
 var mongoose = require('mongoose');
 var players = {};
 var beans = require('./beans');
-var Schema = Schema({
+var playerSchema = Schema({
   name: String,
-  hand: [beans.Schema],
-  plot0: [beans.Schema],
-  plot1: [beans.Schema],
+  hand: [beans.schema],
+  plot0: [beans.schema],
+  plot1: [beans.schema],
   //plot2: can be added on update.
   //http://docs.mongodb.org/manual/reference/operator/update/set/
   gold: Number
