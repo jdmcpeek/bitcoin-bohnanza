@@ -3,12 +3,12 @@ var beans = require('./beans');
 var deck = {};
 var Schema = mongoose.Schema;
 //add the methods we expect from deck to Schema
-deck.deckSchema = new Schema({
+deck.deck_schema = new Schema({
 	channel: String,
-	cards: [beans.beansSchema]
+	cards: [beans.beans_schema]
 });
 
-var model = mongoose.model('Deck', deck.deckSchema);
+var model = mongoose.model('Deck', deck.deck_schema);
 deck.make_deck = function() {
 	totals = {
 		"coffee": 24,
