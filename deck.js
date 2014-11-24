@@ -70,7 +70,7 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
 	console.log("Instantiating deck.")
-	var new_deck = new model;
+	var new_deck = new deck.model;
 	console.log("Generating new deck:");
 	new_deck.init();
 	new_deck.shuffle();
