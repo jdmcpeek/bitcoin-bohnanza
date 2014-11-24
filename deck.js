@@ -9,6 +9,16 @@ deck.deck_schema = new Schema({
 	cards: [beans.beans_schema]
 });
 
+//Adds new cards into the deck (don't forget to shuffle)!
+//cards - array of beans
+deck.deck_schema.methods.add = function(cards) {
+	//This style for-loop acts funny...
+	//if cards is an array I would expect card to be an element
+	for(var card in cards) {
+		this.cards.push(cards[card]);
+	}
+}
+
 //Pops the first card off the deck and returns it
 deck.deck_schema.methods.draw = function() {
 		return this.cards.pop();
@@ -63,12 +73,20 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
 	console.log("Instantiating deck.")
 	var new_deck = new model;
-	console.log(new_deck);
 	console.log("Generating new deck:");
 	new_deck.init();
 	new_deck.shuffle();
-	console.log("Drawing a card");
-	console.log(new_deck.draw());
+	console.log("Drawing 3 cards");
+	var beans = [];
+	for(var i=0; i < 3; i++) {
+		beans[i] = new_deck.draw();
+		console.log(beans[i]);
+	}
+	console.log("Putting them back");
+	new_deck.add(beans);
+	for(var i=1; i <= 3; i++) {
+		console.log(new_deck.cards[new_deck.cards.length-i]);
+	}
 	//ignoring error handling
 	new_deck.save();
 	console.log("Saved new deck.");
