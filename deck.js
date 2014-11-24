@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var beans = require('./beans');
+
 var deck = {};
 var Schema = mongoose.Schema;
 //add the methods we expect from deck to Schema
@@ -7,6 +8,19 @@ deck.deck_schema = new Schema({
 	channel: String,
 	cards: [beans.beans_schema]
 });
+deck.deck_schema.methods.shuffle = function() {
+	//http://goo.gl/Uh6MLE
+	var index = this.cards.length, temp, rnd_index;
+
+	while(0 !== index){
+		rnd_index = Math.floor(Math.random() * index);
+		index -=1;
+
+		temp = this.cards[index];
+		this.cards[index] = this.cards[rnd_index];
+		this.cards[rnd_index] = temp;
+	}
+}
 
 deck.deck_schema.methods.init = function() {
 	totals = {
@@ -43,6 +57,7 @@ db.once('open', function callback () {
 	console.log(new_deck);
 	console.log("Generating new deck:");
 	new_deck.init();
+	new_deck.shuffle();
 	console.log(new_deck);
 	//ignoring error handling
 	new_deck.save();
