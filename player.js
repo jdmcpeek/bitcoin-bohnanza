@@ -27,7 +27,7 @@ var move_beans = function(array1, array2) {
     var element = array2.shift();
     array1.push(element);
   }
-}
+};
 
 //Perform binary function on one of the plots
 schema.methods.plot_index_func = function(array1, plot_index, func) {
@@ -59,7 +59,7 @@ schema.methods.get_from_hand = function(index){
   var value = this.hand[index];
   this.hand.splice(index, 1);
   return value;
-}
+};
 
 //Give me all of the beans from your plot
 schema.methods.uproot_plot = function(plot_index){
