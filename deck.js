@@ -2,9 +2,10 @@ var mongoose = require('mongoose');
 var beans = require('./beans');
 var deck = {};
 var Schema = mongoose.Schema;
+//add the methods we expect from deck to Schema
 deck.deckSchema = new Schema({
 	channel: String,
-	cards: [beans.schema]
+	cards: [beans.Schema]
 });
 
 var model = mongoose.model('Deck', deck.deckSchema);
