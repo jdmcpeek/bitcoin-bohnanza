@@ -8,6 +8,13 @@ deck.deck_schema = new Schema({
 	channel: String,
 	cards: [beans.beans_schema]
 });
+
+//Pops the first card off the deck and returns it
+deck.deck_schema.methods.draw = function() {
+		return this.cards.pop();
+}
+
+//Shuffles this.cards
 deck.deck_schema.methods.shuffle = function() {
 	//http://goo.gl/Uh6MLE
 	var index = this.cards.length, temp, rnd_index;
@@ -22,6 +29,7 @@ deck.deck_schema.methods.shuffle = function() {
 	}
 }
 
+//Populates this.cards with the appropriate beans
 deck.deck_schema.methods.init = function() {
 	totals = {
 		"coffee": 24,
@@ -45,6 +53,7 @@ deck.deck_schema.methods.init = function() {
 	}
 };
 
+
 var model = mongoose.model('Deck', deck.deck_schema);
 
 //I'm not sure this code should live here, but this is demonstrative
@@ -58,7 +67,8 @@ db.once('open', function callback () {
 	console.log("Generating new deck:");
 	new_deck.init();
 	new_deck.shuffle();
-	console.log(new_deck);
+	console.log("Drawing a card");
+	console.log(new_deck.draw());
 	//ignoring error handling
 	new_deck.save();
 	console.log("Saved new deck.");
