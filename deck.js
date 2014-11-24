@@ -23,9 +23,9 @@ deck.makedeck = function() {
 		"garden": 6,
 		"cocoa": 4
 	};
-	var new_deck = new deck.model({channel: 'default_channel', cards: []});
-	for (var bohn in deck.totals) {
-		for (var i=0; i < deck.totals[bohn]; i++) {
+	var new_deck = model({channel: 'default_channel', cards: []});
+	for (var bohn in totals) {
+		for (var i=0; i < totals[bohn]; i++) {
 			var new_card = beans.new(bohn);
 			new_deck.cards.push(new_card);
 		}
@@ -33,6 +33,7 @@ deck.makedeck = function() {
 	//Shuffle?
 	return new_deck;
 };
+
 
 //I'm not sure this code should live here, but this is demonstrative
 mongoose.connect('mongodb://localhost/test');
@@ -42,9 +43,9 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
 	console.log("Generating new deck:");
 	var new_deck = deck.makedeck();
+	console.log(new_deck);
 	//ignoring error handling
 	new_deck.save();
-	console.log(new_deck);
 	console.log("Saved new deck.");
 });
 module.exports = deck;
