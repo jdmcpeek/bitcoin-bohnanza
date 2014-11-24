@@ -3,13 +3,13 @@ var players = {};
 var beans = require('./beans');
 var playerSchema = Schema({
   name: String,
-  hand: [beans.schema],
-  plot0: [beans.schema],
-  plot1: [beans.schema],
+  hand: [beans.beansSchema],
+  plot0: [beans.beansSchema],
+  plot1: [beans.beansSchema],
   //plot2: can be added on update.
   //http://docs.mongodb.org/manual/reference/operator/update/set/
   gold: Number
 });
 
-players.player = mongoose.model('Player', playerSchema); 
+players.player = mongoose.model('Player', playerSchema);
 module.exports = players;

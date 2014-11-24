@@ -1,9 +1,8 @@
 var mongoose = require('mongoose');
 var beans = {};
-
 var Schema = mongoose.Schema;
 
-beans.schema = new Schema({
+beans.beansSchema = new Schema({
 	type: String,
 	gold_I: Number,
 	gold_II: Number,
@@ -12,7 +11,7 @@ beans.schema = new Schema({
 });
 
 // This is essentialy a private constructor
-var model = mongoose.model('Bean', beans.schema);
+var model = mongoose.model('Bean', beans.beansSchema);
 
 beans.new = function (type) {
 	// if type isn't a key in types this is gonna be ugly.

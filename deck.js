@@ -5,12 +5,11 @@ var Schema = mongoose.Schema;
 //add the methods we expect from deck to Schema
 deck.deckSchema = new Schema({
 	channel: String,
-	cards: [beans.Schema]
+	cards: [beans.beansSchema]
 });
 
 var model = mongoose.model('Deck', deck.deckSchema);
-//do we want camel case, underscores, or just concat??
-deck.makedeck = function() {
+deck.make_deck = function() {
 	totals = {
 		"coffee": 24,
 		"wax": 22,
@@ -38,12 +37,11 @@ deck.makedeck = function() {
 
 //I'm not sure this code should live here, but this is demonstrative
 mongoose.connect('mongodb://localhost/test');
-//mongoose.connect('mongodb://127.0.0.1:27017/test');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
 	console.log("Generating new deck:");
-	var new_deck = deck.makedeck();
+	var new_deck = deck.make_deck();
 	console.log(new_deck);
 	//ignoring error handling
 	new_deck.save();
