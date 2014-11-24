@@ -3,7 +3,7 @@ var beans = {};
 
 var Schema = mongoose.Schema;
 
-beans.schema = new Schema({
+beans.Schema = new Schema({
 	type: String,
 	gold_I: Number,
 	gold_II: Number,
