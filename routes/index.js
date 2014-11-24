@@ -13,7 +13,10 @@ router.post('/play/:session', function(req, res) {
   var session = req.params.session;
   var deck = deck.makedeck;
   res.render('play');
-  
+  /* make a new game
+  * save that game to the db
+  * make dem moves
+  */
   // add to database
 
 });

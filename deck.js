@@ -3,7 +3,6 @@ var beans = require('./beans');
 
 var deck = {};
 var Schema = mongoose.Schema;
-//add the methods we expect from deck to Schema
 deck.deck_schema = new Schema({
 	channel: String,
 	cards: [beans.beans_schema]
@@ -63,8 +62,7 @@ deck.deck_schema.methods.init = function() {
 	}
 };
 
-
-var model = mongoose.model('Deck', deck.deck_schema);
+deck.model = mongoose.model('Deck', deck.deck_schema);
 
 //I'm not sure this code should live here, but this is demonstrative
 mongoose.connect('mongodb://localhost/test');
