@@ -95,7 +95,7 @@ schema.methods.map = function() {
 			"gold_III": 9,
 			"gold_IV": 11
 		}
-	}
+	};
 	return types[this.type];
 };
 

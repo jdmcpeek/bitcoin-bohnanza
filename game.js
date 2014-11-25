@@ -32,7 +32,7 @@ schema.methods.generate_deck = function () {
     "garden": 6,
     "cocoa": 4
   };
-  for (bean_type in totals) {
+  for (var bean_type in totals) {
     for (var i=0; i < totals[bean_type]; i++) {
       var new_bean = new bean_model({type: bean_type});
       this.deck.push(new_bean);
@@ -58,7 +58,7 @@ schema.methods.shuffle_deck = function () {
 //Pops the first n cards off the deck and returns them in an array
 schema.methods.draw_n = function(number) {
     var return_array = [];
-    for(int i=0; i<n; i++) {
+    for(var i=0; i<number; i++) {
       return_array.push(this.deck.shift());
     }
     return return_array;
