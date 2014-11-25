@@ -9,7 +9,7 @@ var schema = new Schema({
 
 //Plant means add
 schema.methods.plant = function(beans){
-  for(var i=0; i<beans.length(); i++){
+  for(var i=0; i<beans.length; i++){
     this.beans.push(beans[i]);
   }
 };
@@ -17,7 +17,8 @@ schema.methods.plant = function(beans){
 //Uproot means remove all
 schema.methods.uproot = function() {
   var array = [];
-  for(var i=0; i<this.beans.length();i++){
+  var length = this.beans.length;
+  for(var i=0; i<length; i++){
     array[i] = this.beans.shift();
   }
   return array;
@@ -34,5 +35,5 @@ var bean_validator = function(beans) {
   return true;
 };
 
-schema.path('type').validate(bean_validator, "beans in a plot must all be the same type!");
+schema.path('beans').validate(bean_validator, "beans in a plot must be of one type!");
 module.exports = mongoose.model('Plot', schema);
