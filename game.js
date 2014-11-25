@@ -5,20 +5,7 @@ var bean_schema = bean_model.schema;
 var player_model = require('./player');
 var player_schema = player_model.schema;
 
-// To do this "better" we could take advantage of the fact that "order" only
-// really matters for the deck and hands.
-var schema = new Schema({
-  //for now the name is the game ID
-  _id:            String,
-  round:          Number,
-  current_player: Number,
-  deck:           [bean_schema],
-  discard:        [bean_schema],
-  players:        [player_schema]
-});
-
-//Populate this.deck
-schema.methods.generate_deck = function () {
+generate_deck = function () {
   totals = {
     "coffee": 24,
     "wax": 22,
@@ -32,13 +19,26 @@ schema.methods.generate_deck = function () {
     "garden": 6,
     "cocoa": 4
   };
+  var deck = [];
   for (var bean_type in totals) {
     for (var i=0; i < totals[bean_type]; i++) {
       var new_bean = new bean_model({type: bean_type});
-      this.deck.push(new_bean);
+      deck.push(new_bean);
     }
   }
+  return deck;
 };
+
+// To do this "better" we could take advantage of the fact that "order" only
+// really matters for the deck and hands.
+var schema = new Schema({
+  channel:        String,
+  round:          {type: Number, default: 0},
+  current_player: {type: Number, default: 0},
+  deck:           {type: [bean_schema], default: generate_deck()},
+  discard:        {type: [bean_schema], default: []},
+  players:        [player_schema]
+});
 
 //Shuffles this.deck
 schema.methods.shuffle_deck = function () {
@@ -58,6 +58,11 @@ schema.methods.shuffle_deck = function () {
 //Pops the first n cards off the deck and returns them in an array
 schema.methods.draw_n = function(number) {
     var return_array = [];
+    if(this.deck.length < n) {
+      this.recycle();
+      this.shuffle_deck();
+    }
+
     for(var i=0; i<number; i++) {
       return_array.push(this.deck.shift());
     }
@@ -66,12 +71,36 @@ schema.methods.draw_n = function(number) {
 
 //Takes the all the beans in the discard pile moves them into the deck again
 schema.methods.recycle = function() {
-  //This style for-loop acts funny... if cards is an array I would expect card
-  //to be an element
   while(this.discard.length > 0) {
     this.deck.push(this.discard.shift());
   }
   this.round++;
+};
+
+//Hand to Hand swap
+schema.methods.trade_to_hand = function(p1, index_p1, p2, index_p2){
+  var player1 = this.players[p1];
+  var player2 = this.players[p2];
+  card1 = player1.get_from_hand(index_p1);
+  card2 = player2.get_from_hand(index_p2);
+  player1.add_to_hand([card2]);
+  player2.add_to_hand([card1]);
+};
+
+//Hand to plot donate
+schema.methods.donate_to_plot = function(p1, index_p1, p2, plot_index){
+  var player1 = this.players[p1];
+  var player2 = this.players[p2];
+  card = player1.get_from_hand(index_p1);
+  player2.plots[plot_index].plant(card);
+};
+
+//Hand to Hand donate
+schema.methods.donate_to_hand = function(p1, index_p1, p2){
+  var player1 = this.players[p1];
+  var player2 = this.players[p2];
+  card = player1.get_from_hand(index_p1);
+  player2.add_to_hand([card]);
 };
 
 module.exports = mongoose.model('Game', schema);
