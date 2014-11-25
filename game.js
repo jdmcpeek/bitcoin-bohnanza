@@ -29,8 +29,6 @@ generate_deck = function () {
   return deck;
 };
 
-// To do this "better" we could take advantage of the fact that "order" only
-// really matters for the deck and hands.
 var schema = new Schema({
   channel:        String,
   round:          {type: Number, default: 0},
@@ -58,7 +56,7 @@ schema.methods.shuffle_deck = function () {
 //Pops the first n cards off the deck and returns them in an array
 schema.methods.draw_n = function(number) {
     var return_array = [];
-    if(this.deck.length < n) {
+    if(this.deck.length < number) {
       this.recycle();
       this.shuffle_deck();
     }
@@ -77,7 +75,7 @@ schema.methods.recycle = function() {
   this.round++;
 };
 
-//Hand to Hand swap
+//Hand to hand swap
 schema.methods.trade_to_hand = function(p1, index_p1, p2, index_p2){
   var player1 = this.players[p1];
   var player2 = this.players[p2];
@@ -95,7 +93,7 @@ schema.methods.donate_to_plot = function(p1, index_p1, p2, plot_index){
   player2.plots[plot_index].plant(card);
 };
 
-//Hand to Hand donate
+//Hand to hand donate
 schema.methods.donate_to_hand = function(p1, index_p1, p2){
   var player1 = this.players[p1];
   var player2 = this.players[p2];
