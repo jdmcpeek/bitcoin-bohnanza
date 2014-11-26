@@ -4,7 +4,6 @@ var bean_model = require('./bean');
 var bean_schema = bean_model.schema;
 var player_model = require('./player');
 var player_schema = player_model.schema;
-
 var game_schema = new Schema({
   channel:        String,
   round:          {type: Number, default: 0},
@@ -14,9 +13,9 @@ var game_schema = new Schema({
   players:        [player_schema]
 });
 
-//Generate a deck
-game_schema.methods.generate_deck = function () {
-  var totals = {
+//Alternate Constructor
+game_schema.statics.create = function(params) {
+    totals = {
     "coffee": 24,
     "wax": 22,
     "blue": 20,
@@ -29,12 +28,16 @@ game_schema.methods.generate_deck = function () {
     "garden": 6,
     "cocoa": 4
   };
+  var deck = [];
   for (var bean_type in totals) {
     for (var i=0; i < totals[bean_type]; i++) {
       var new_bean = new bean_model({type: bean_type});
-      this.deck.push(new_bean);
+      deck.push(new_bean);
     }
   }
+  var new_game = new this(params);
+  new_game.deck = deck;
+  return new_game;
 };
 
 //Shuffles this.deck

@@ -7,6 +7,9 @@ var game = new game_model({channel: "nanzers", players: [Steven, David]});
 console.log("Ready to go");
 console.log("Shuffling the Deck");
 console.log(game.deck);
+//This also happens with plots!
+console.log(game.players[0].plots);
+
 /*
 game.shuffle_deck();
 game.generate_deck();

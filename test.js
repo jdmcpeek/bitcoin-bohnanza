@@ -1,18 +1,17 @@
 var bean_model = require('./bean');
 var player_model = require('./player');
 var game_model = require('./game');
-var Steven = new player_model({name: "Steven"});
-var David = new player_model({name: "David"});
-var game = new game_model({channel: "nanzers", players: [Steven, David]});
+var Steven = player_model.create({name: "Steven"});
+var David = player_model.create({name: "David"});
+var game = game_model.create({channel: "nanzers", players: [Steven, David]});
 console.log("Ready to go");
+console.log("Channel Name:" + game.channel);
 console.log("Shuffling the Deck");
-game.generate_deck();
 game.shuffle_deck();
-console.log();
+
 console.log("Drawing 3 cards and giving them to Steven");
 var cards = game.draw_n(3);
 game.players[0].add_to_hand(cards);
-console.log(game.players[0].name);
 console.log("Steven's Hand");
 console.log(game.players[0].hand);
 console.log();
