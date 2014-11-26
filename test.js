@@ -1,6 +1,6 @@
 var bean_model = require('./bean');
 var player_model = require('./player');
-var game_model = require('./game(example)');
+var game_model = require('./game');
 var Steven = new player_model({name: "Steven"});
 var David = new player_model({name: "David"});
 var game = new game_model({channel: "nanzers", players: [Steven, David]});
