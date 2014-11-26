@@ -5,12 +5,18 @@ var bean_schema = bean_model.schema;
 var player_model = require('./player');
 var player_schema = player_model.schema;
 
+bean0 = new bean_model({type: "green"});
+bean1 = new bean_model({type: "red"});
+bean2 = new bean_model({type: "blue"});
+beans = [bean0, bean1, bean2];
+
 var game_schema = new Schema({
   channel:        String,
   round:          {type: Number, default: 0},
   current_player: {type: Number, default: 0},
-  deck:           {type: [bean_schema], default: [bean0, bean1]},
-  discard:        {type: [bean_schema], default: []},
+  //deck:           {type: [bean_schema], default: [bean0, bean1, bean2]},
+  //deck:           {type: [bean_schema], default: beans},
+  deck:           {type: [bean_schema], default: [bean0]},
   players:        [player_schema]
 });
 

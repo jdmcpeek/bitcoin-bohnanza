@@ -6,8 +6,10 @@ var David = new player_model({name: "David"});
 var game = new game_model({channel: "nanzers", players: [Steven, David]});
 console.log("Ready to go");
 console.log("Shuffling the Deck");
-game.generate_deck();
+console.log(game.deck);
+/*
 game.shuffle_deck();
+game.generate_deck();
 console.log();
 console.log("Drawing 3 cards and giving them to Steven");
 var cards = game.draw_n(3);
@@ -38,3 +40,4 @@ var stevens_bean = game.players[0].get_from_hand(0);
 Steven.plant([stevens_bean], 0);
 console.log("Stevie's plots[0]");
 console.log(game.players[0].plots[0].beans);
+*/
