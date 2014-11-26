@@ -90,7 +90,7 @@ game_schema.methods.donate_to_plot = function(p1, index_p1, p2, plot_index){
   var player1 = this.players[p1];
   var player2 = this.players[p2];
   var card = player1.get_from_hand(index_p1);
-  player2.plots[plot_index].plant(card);
+  player2.plots[plot_index].plant([card]);
 };
 
 //Hand to hand donate

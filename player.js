@@ -13,7 +13,8 @@ var player_schema = new Schema({
 });
 
 
-//Take these beans, put them in your hand
+// Take these beans, put them in your hand
+// Accepts only arrays
 player_schema.methods.add_to_hand = function(beans){
   for(var i=0; i<beans.length; i++)
     this.hand.push(beans[i]);

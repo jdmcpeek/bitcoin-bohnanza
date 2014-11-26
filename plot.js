@@ -10,9 +10,9 @@ var plot_schema = new Schema({
 
 //Plant means add
 plot_schema.methods.plant = function(beans){
-  for(var i=0; i<beans.length; i++){
-    this.beans.push(beans[i]);
-  }
+    for(var i=0; i<beans.length; i++){
+      this.beans.push(beans[i]);
+    }
 };
 
 //Uproot means remove all
