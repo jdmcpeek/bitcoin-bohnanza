@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var bean_model = require('./bean');
 var bean_schema = bean_model.schema;
-var player_model = require('./player');
+var player_model = require('./player(example)');
 var player_schema = player_model.schema;
 
 bean0 = new bean_model({type: "green"});
