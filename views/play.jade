@@ -7,11 +7,15 @@ block content
   button(type="button" class="submit")
   script.
     var io = io.connect();
-    var name = $('input#checkin').val();
+    io.emit('start');
+    io.on('hahaha', function(){
+      $('body').prepend('<p>i love to sing</p>');
+    });
+    //- var name = $('input#checkin').val();
     $('button').click(function() {
       io.emit('check');
     });
-    io.on('new visitor', function() {
-      $('body').append('<p>New visitor, hooray! ' + new Date().toString() +'</p>')
-    })
+    io.on('new visitor', function(data) {
+      $('body').append('<p> Love: '+ data.love + '</p>')
+    });
   

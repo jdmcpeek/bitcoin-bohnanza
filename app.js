@@ -18,7 +18,11 @@ app.set('view engine', 'jade');
 
 // Broadcast the new visitor event on ready route.
 app.io.route('check', function(req) {
-  req.io.broadcast('new visitor');
+  app.io.broadcast('new visitor', { "love": "is the loneliest number" });
+});
+
+app.io.route('start', function(req){
+  app.io.broadcast('hahaha');
 });
 
 // Send client html.
