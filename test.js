@@ -27,6 +27,9 @@ console.log(game.players[1].hand);
 console.log("Taking Steven's next card and donating it to David's plot[0]");
 game.donate_to_plot(0, 0, 1, 0);
 console.log("David's plot[0]");
+
 console.log(game.players[1].plots[0]);
+
+
 console.log("Steven's Hand");
 console.log(game.players[0].hand);

@@ -5,7 +5,7 @@ var bean_schema = bean_model.schema;
 var player_model = require('./player');
 var player_schema = player_model.schema;
 
-generate_deck = function () {
+var generate_deck = function () {
   totals = {
     "coffee": 24,
     "wax": 22,
@@ -29,7 +29,7 @@ generate_deck = function () {
   return deck;
 };
 
-var schema = new Schema({
+var game_schema = new Schema({
   channel:        String,
   round:          {type: Number, default: 0},
   current_player: {type: Number, default: 0},
@@ -39,7 +39,7 @@ var schema = new Schema({
 });
 
 //Shuffles this.deck
-schema.methods.shuffle_deck = function () {
+game_schema.methods.shuffle_deck = function () {
   //http://goo.gl/Uh6MLE
   var index = this.deck.length, temp, rnd_index;
 
@@ -54,7 +54,7 @@ schema.methods.shuffle_deck = function () {
 };
 
 //Pops the first n cards off the deck and returns them in an array
-schema.methods.draw_n = function(number) {
+game_schema.methods.draw_n = function(number) {
     var return_array = [];
     if(this.deck.length < number) {
       this.recycle();
@@ -68,7 +68,7 @@ schema.methods.draw_n = function(number) {
 };
 
 //Takes the all the beans in the discard pile moves them into the deck again
-schema.methods.recycle = function() {
+game_schema.methods.recycle = function() {
   while(this.discard.length > 0) {
     this.deck.push(this.discard.shift());
   }
@@ -76,29 +76,29 @@ schema.methods.recycle = function() {
 };
 
 //Hand to hand swap
-schema.methods.trade_to_hand = function(p1, index_p1, p2, index_p2){
+game_schema.methods.trade_to_hand = function(p1, index_p1, p2, index_p2){
   var player1 = this.players[p1];
   var player2 = this.players[p2];
-  card1 = player1.get_from_hand(index_p1);
-  card2 = player2.get_from_hand(index_p2);
+  var card1 = player1.get_from_hand(index_p1);
+  var card2 = player2.get_from_hand(index_p2);
   player1.add_to_hand([card2]);
   player2.add_to_hand([card1]);
 };
 
 //Hand to plot donate
-schema.methods.donate_to_plot = function(p1, index_p1, p2, plot_index){
+game_schema.methods.donate_to_plot = function(p1, index_p1, p2, plot_index){
   var player1 = this.players[p1];
   var player2 = this.players[p2];
-  card = player1.get_from_hand(index_p1);
+  var card = player1.get_from_hand(index_p1);
   player2.plots[plot_index].plant(card);
 };
 
 //Hand to hand donate
-schema.methods.donate_to_hand = function(p1, index_p1, p2){
+game_schema.methods.donate_to_hand = function(p1, index_p1, p2){
   var player1 = this.players[p1];
   var player2 = this.players[p2];
-  card = player1.get_from_hand(index_p1);
+  var card = player1.get_from_hand(index_p1);
   player2.add_to_hand([card]);
 };
 
-module.exports = mongoose.model('Game', schema);
+module.exports = mongoose.model('Game', game_schema);

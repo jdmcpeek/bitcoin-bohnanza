@@ -3,19 +3,20 @@ var bean_model = require('./bean');
 var bean_schema = bean_model.schema;
 var Schema = mongoose.Schema;
 
-var schema = new Schema({
+var plot_schema = new Schema({
   beans:  {type: [bean_schema], default: []}
 });
 
+
 //Plant means add
-schema.methods.plant = function(beans){
+plot_schema.methods.plant = function(beans){
   for(var i=0; i<beans.length; i++){
     this.beans.push(beans[i]);
   }
 };
 
 //Uproot means remove all
-schema.methods.uproot = function() {
+plot_schema.methods.uproot = function() {
   var array = [];
   var length = this.beans.length;
   for(var i=0; i<length; i++){
@@ -35,5 +36,5 @@ var bean_validator = function(beans) {
   return true;
 };
 
-schema.path('beans').validate(bean_validator, "beans in a plot must be of one type!");
-module.exports = mongoose.model('Plot', schema);
+plot_schema.path('beans').validate(bean_validator, "beans in a plot must be of one type!");
+module.exports = mongoose.model('Plot', plot_schema);
