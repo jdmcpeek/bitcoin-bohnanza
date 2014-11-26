@@ -11,11 +11,17 @@ block content
     io.on('hahaha', function(){
       $('body').prepend('<p>i love to sing</p>');
     });
-    //- var name = $('input#checkin').val();
+    $('input').keyup(function(event) {   
+      if (event.keycode == 13) {
+        var txtInput = $(this).val();
+        alert(txtInput);
+      }
+    });
+    console.log(name);
     $('button').click(function() {
       io.emit('check');
     });
     io.on('new visitor', function(data) {
-      $('body').append('<p> Love: '+ data.love + '</p>')
+      $('body').append('<p> Love: '+ data.love + '</p>');
     });
   
