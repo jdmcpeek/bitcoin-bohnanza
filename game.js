@@ -4,9 +4,18 @@ var bean_model = require('./bean');
 var bean_schema = bean_model.schema;
 var player_model = require('./player');
 var player_schema = player_model.schema;
+var game_schema = new Schema({
+  channel:        String,
+  round:          {type: Number, default: 0},
+  current_player: {type: Number, default: 0},
+  deck:           {type: [bean_schema], default: []},
+  discard:        {type: [bean_schema], default: []},
+  players:        [player_schema]
+});
 
-var generate_deck = function () {
-  totals = {
+//Alternate Constructor
+game_schema.statics.create = function(params) {
+    totals = {
     "coffee": 24,
     "wax": 22,
     "blue": 20,
@@ -26,17 +35,10 @@ var generate_deck = function () {
       deck.push(new_bean);
     }
   }
-  return deck;
+  var new_game = new this(params);
+  new_game.deck = deck;
+  return new_game;
 };
-
-var game_schema = new Schema({
-  channel:        String,
-  round:          {type: Number, default: 0},
-  current_player: {type: Number, default: 0},
-  deck:           {type: [bean_schema], default: generate_deck()},
-  discard:        {type: [bean_schema], default: []},
-  players:        [player_schema]
-});
 
 //Shuffles this.deck
 game_schema.methods.shuffle_deck = function () {
@@ -57,6 +59,7 @@ game_schema.methods.shuffle_deck = function () {
 game_schema.methods.draw_n = function(number) {
     var return_array = [];
     if(this.deck.length < number) {
+      //In practice this should resolve the problem...
       this.recycle();
       this.shuffle_deck();
     }
