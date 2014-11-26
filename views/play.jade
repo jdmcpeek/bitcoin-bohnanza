@@ -3,8 +3,15 @@ extends layout
 block content
   h1= title
   p This is your game.
-  select(name="player")
-    option(value="David") David
-    option(value="Harry") Harry
-    option(value="Eli") Eli
+  input(placeholder="who are you?" id="checkin")
+  button(type="button" class="submit")
+  script.
+    var io = io.connect();
+    var name = $('input#checkin').val();
+    $('button').click(function() {
+      io.emit('check');
+    });
+    io.on('new visitor', function() {
+      $('body').append('<p>New visitor, hooray! ' + new Date().toString() +'</p>')
+    })
   
