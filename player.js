@@ -6,15 +6,15 @@ var plot_model = require('./plot');
 var plot_schema = plot_model.schema;
 
 var player_schema = new Schema({
-  name:         String,
-  hand:         {type: [bean_schema], default: []},
-  plots:        {type: [plot_schema], default: []},
-  gold:         {type: Number, default: 0}
+  name:         {type: String, required: true},
+  hand:         {type: [bean_schema], default: [], required: true},
+  plots:        {type: [plot_schema], default: [], required: true},
+  gold:         {type: Number, default: 0, required: true}
 });
 
 //Alternate Constructor
 player_schema.statics.create = function(params) {
-  var new_player = new this();
+  var new_player = new this(params);
   new_player.plots = [new plot_model(), new plot_model()];
   return new_player;
 };

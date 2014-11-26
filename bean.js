@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var schema = new Schema({
-	type: String
+	type: {type: String, required: true}
 });
 
 // This way we only store an _id and the type
