@@ -7,8 +7,8 @@ var plot_schema = plot_model.schema;
 
 var player_schema = new Schema({
   name:         {type: String, required: true},
-  hand:         {type: [bean_schema], default: [], required: true},
-  plots:        {type: [plot_schema], default: [], required: true},
+  hand:         {type: [bean_schema], default: []},
+  plots:        {type: [plot_schema], default: []},
   gold:         {type: Number, default: 0, required: true}
 });
 

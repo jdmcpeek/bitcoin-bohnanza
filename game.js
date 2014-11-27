@@ -9,8 +9,8 @@ var game_schema = new Schema({
   channel:        {type: String, required: true},
   round:          {type: Number, default: 0, required: true},
   current_player: {type: Number, default: 0, required: true},
-  deck:           {type: [bean_schema], default: [], required: true},
-  discard:        {type: [bean_schema], default: [], required: true},
+  deck:           {type: [bean_schema], default: []},
+  discard:        {type: [bean_schema], default: []},
   players:        {type: [player_schema], required: true}
 });
 

@@ -59,7 +59,7 @@ db.on('open', function callback() {
   db_game.players.push(David);
   disp_players(db_game);
   console.log("Let's save this game!");
-
+  model.save_game(db_game);
 });
 
 db.on('error', console.error.bind(console, 'connection error:'));

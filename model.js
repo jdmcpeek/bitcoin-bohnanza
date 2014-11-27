@@ -10,10 +10,10 @@ model.create_game = function(channel_name, player_name) {
   return new_game;
 };
 
-model.save_game = function(game, cb) {
+model.save_game = function(game,cb) {
   game.save(function(err, game){
     if(err) console.error(err);
-    cb(game);
+    if(cb !== undefined) cb(game);
   });
 };
 
