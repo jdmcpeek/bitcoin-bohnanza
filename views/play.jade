@@ -3,8 +3,25 @@ extends layout
 block content
   h1= title
   p This is your game.
-  select(name="player")
-    option(value="David") David
-    option(value="Harry") Harry
-    option(value="Eli") Eli
+  input(placeholder="who are you?" id="checkin")
+  button(type="button" class="submit")
+  script.
+    var io = io.connect();
+    io.emit('start');
+    io.on('hahaha', function(){
+      $('body').prepend('<p>i love to sing</p>');
+    });
+    $('input').keyup(function(event) {   
+      if (event.keycode == 13) {
+        var txtInput = $(this).val();
+        alert(txtInput);
+      }
+    });
+    console.log(name);
+    $('button').click(function() {
+      io.emit('check');
+    });
+    io.on('new visitor', function(data) {
+      $('body').append('<p> Love: '+ data.love + '</p>');
+    });
   
