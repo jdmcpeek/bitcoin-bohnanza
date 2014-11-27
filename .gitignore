@@ -1,0 +1,7 @@
+# Let's keep this repo high & tight
+
+# Dependency directory
+node_modules
+
+# Logs
+*.log
