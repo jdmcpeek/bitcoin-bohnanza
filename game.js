@@ -4,6 +4,7 @@ var bean_model = require('./bean');
 var bean_schema = bean_model.schema;
 var player_model = require('./player');
 var player_schema = player_model.schema;
+
 var game_schema = new Schema({
   channel:        {type: String, required: true},
   round:          {type: Number, default: 0, required: true},

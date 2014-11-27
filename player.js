@@ -19,8 +19,8 @@ player_schema.statics.create = function(params) {
   return new_player;
 };
 
-// Take these beans, put them in your hand
-// Accepts only arrays
+//Take these beans, put them in your hand
+//Accepts only arrays
 player_schema.methods.add_to_hand = function(beans){
   for(var i=0; i<beans.length; i++)
     this.hand.push(beans[i]);

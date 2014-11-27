@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var bean_model = require('./bean');
 var plot_model = require('./plot');
 var player_model = require('./player');
 var game_model = require('./game');
@@ -18,7 +17,7 @@ db.on('open', function callback() {
   exports.save_game = function(game, cb) {
     game.save(function(err, game){
       if(err) console.error(err);
-      else cb(game);
+      cb(game);
     });
     console.log("Saved!");
   };
@@ -28,7 +27,7 @@ db.on('open', function callback() {
     game_model.findOne({channel: channel_name},
       function (err, game) {
       if(err) console.error(err);
-        cb(game);
+      cb(game);
     });
   };
 });

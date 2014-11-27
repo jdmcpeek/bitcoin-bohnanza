@@ -7,7 +7,6 @@ var plot_schema = new Schema({
   beans:  {type: [bean_schema], default: [], required: true}
 });
 
-
 //Plant means add
 plot_schema.methods.plant = function(beans){
     for(var i=0; i<beans.length; i++){

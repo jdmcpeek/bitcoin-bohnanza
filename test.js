@@ -4,6 +4,7 @@ var game_model = require('./game');
 var Steven = player_model.create({name: "Steven"});
 var David = player_model.create({name: "David"});
 var game = game_model.create({channel: "nanzers", players: [Steven, David]});
+
 console.log("Ready to go");
 console.log("Channel Name:" + game.channel);
 console.log("Shuffling the Deck");
