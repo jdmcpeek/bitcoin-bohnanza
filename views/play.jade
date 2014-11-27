@@ -24,4 +24,8 @@ block content
     io.on('new visitor', function(data) {
       $('body').append('<p> Love: '+ data.love + '</p>');
     });
+    io.on('the_game', function(data) {
+    console(data);
+    $('body').append('<p> game: '+ data.toString() + '</p>');
+    });
   

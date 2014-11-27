@@ -4,6 +4,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+db = mongoose.connection;
+mongoose.connect('mongodb://localhost/test');
+var model = require('./model');
 
 // var routes = require('./routes/index');
 // var users = require('./routes/users');
@@ -18,7 +22,13 @@ app.set('view engine', 'jade');
 
 // Broadcast the new visitor event on ready route.
 app.io.route('check', function(req) {
-  app.io.broadcast('new visitor', { "love": "is the loneliest number" });
+  db.on('connected', function callback() {
+    console.log("hit the db");
+    var db_game = model.create_game("Test","Steven");
+    app.io.broadcast('the_game', db_game);
+  });
+
+  db.on('error', console.error.bind(console, 'connection error:'));
 });
 
 app.io.route('start', function(req){
