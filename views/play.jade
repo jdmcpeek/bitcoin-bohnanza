@@ -1,32 +1,32 @@
 extends layout
 
 block content
-  h1= title
+  h1= #{channel}
   p This is your game.
-  input(placeholder="who are you?" id="checkin")
-  button(type="button" class="button") button
-  button(type="button" class="counter") counter
-  script.
-    var io = io.connect();
-    io.emit('start');
-    io.on('hahaha', function(){
-      $('body').prepend('<p>i love to sing</p>');
-    });
-    $('input').keyup(function(event) {   
-      if (event.keycode == 13) {
-        var txtInput = $(this).val();
-        alert(txtInput);
-      }
-    });
-    console.log(name);
-    $('.button').click(function() {
-      io.emit('check');
-    });
-    io.on('key', function(data) {
-      $('body').append(data['channel']).append(data.players[0].name + "<br />");//'<p> Love: '+ data.love + '</p>');
-    });
-    $('.counter').click(function() {
-      io.emit('index');
-    });
-    
-    
+  
+  //- input(placeholder="who are you?" id="checkin")
+  //- button(type="button" class="button") button
+  //- button(type="button" class="counter") counter
+  //- script.
+  //-   var io = io.connect();
+  //-   io.emit('start');
+  //-   io.on('hahaha', function(){
+  //-     $('body').prepend('<p>i love to sing</p>');
+  //-   });
+  //-   $('input').keyup(function(event) {   
+  //-     if (event.keycode == 13) {
+  //-       var txtInput = $(this).val();
+  //-       alert(txtInput);
+  //-     }
+  //-   });
+  //-   console.log(name);
+  //-   $('.button').click(function() {
+  //-     io.emit('check');
+  //-   });
+  //-   io.on('key', function(data) {
+  //-     $('body').append(data['channel']).append(data.players[0].name + "<br />");//'<p> Love: '+ data.love + '</p>');
+  //-   });
+  //-   $('.counter').click(function() {
+  //-     io.emit('index');
+  //-   });
+  //-   
