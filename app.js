@@ -23,8 +23,13 @@ app.set('view engine', 'jade');
 
 // Traditional Routing
 // Display the starting page
-app.get('/', function(req, res) {
-  res.render('index');
+app.get('/', function(req, res){
+  //probably also should find a better query.
+  game_model.find({},{channel: 1, players: 1}, function(err, games){
+      if(err) console.error(err); //too extreme
+      //probably should send like 10, get more on socket
+      else res.render('index', {games: games});
+      });
 });
 
 // Generate a new game

@@ -25,22 +25,12 @@ input {
 
 .sessions {
     width: 40%;
-    height: 7em;
+    height: 25em;
     border-color: black;
     border: solid;
     position: absolute;
     right: 3em;
-    top: 25em;
+    /*top: 25em;*/
     padding: 2em;
-
-}
-.players {
-	border: solid;
-	border-color: black;
-	border-width: 2px;
-	position: absolute;
-	right: 3em;
-	width: 40%;
-	padding: 2em;
 
 }
