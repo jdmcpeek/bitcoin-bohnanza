@@ -42,6 +42,12 @@ game_schema.statics.create = function(channel_name, player_name) {
   return new_game;
 };
 
+//Add a new player
+game_schema.methods.add_player = function(player_name) {
+  var new_player = player_model.create({name: player_name});
+  this.players.push(new_player);
+};
+
 //Shuffles this.deck
 game_schema.methods.shuffle_deck = function () {
   //http://goo.gl/Uh6MLE

@@ -5,7 +5,8 @@ var bodyParser = require('body-parser');
 
 // Database Stuffz
 var mongoose = require('mongoose');
-var game_model = require('./game');
+var game_model = require('./model/game');
+
 db = mongoose.connection;
 mongoose.connect('mongodb://localhost/test');
 db.on('error', console.error.bind(console, 'connection error:'));

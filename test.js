@@ -1,10 +1,7 @@
 var mongoose = require('mongoose');
-var bean_model = require('./bean');
-var player_model = require('./player');
-var game_model = require('./game');
-var David = player_model.create({name: "David"});
+var game_model = require('./model/game');
 var game = game_model.create("nanzers", "Steven");
-game.players[1] = David;
+game.add_player("David");
 
 console.log("Ready to go");
 console.log("Channel Name:" + game.channel);
@@ -54,8 +51,7 @@ db.on('open', function callback() {
   var db_game = game_model.create("Test","Steven");
   disp_players(db_game);
   console.log("Adding Dav-id");
-  David = player_model.create({name: "Da-vid"});
-  db_game.players.push(David);
+  db_game.add_player("Dav-id");
   disp_players(db_game);
   console.log("Let's save this game!");
     db_game.save(function(err){
