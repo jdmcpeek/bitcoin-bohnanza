@@ -1,9 +1,10 @@
 extends layout
 
 block content
-  h1= #{channel}
-  p This is your game.
-  
+  h1 Channel: #{game.channel}
+  h1(id="players")
+  script.
+    console.log($);
   //- input(placeholder="who are you?" id="checkin")
   //- button(type="button" class="button") button
   //- button(type="button" class="counter") counter
