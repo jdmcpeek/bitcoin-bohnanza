@@ -36,12 +36,12 @@ app.post('/generate', function(req, res){
 
 app.get('/play/:channel', function(req, res){
   var game;
-  model.find_game(req.param('channel'), function(err, found) {
+  model.find_game(req.params.channel, function(err, found) {
     if(err) console.error(err);
     game = found;
+    res.render('play', {channel: game.channel});
   });
   console.log(game.channel);
-  res.render('play', {channel: game.channel});
 });
 // Socket Routing
 app.io.route('start', function(req){
