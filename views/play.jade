@@ -4,7 +4,8 @@ block content
   h1= title
   p This is your game.
   input(placeholder="who are you?" id="checkin")
-  button(type="button" class="submit")
+  button(type="button" class="button") button
+  button(type="button" class="counter") counter
   script.
     var io = io.connect();
     io.emit('start');
@@ -18,14 +19,14 @@ block content
       }
     });
     console.log(name);
-    $('button').click(function() {
+    $('.button').click(function() {
       io.emit('check');
     });
-    io.on('new visitor', function(data) {
-      $('body').append('<p> Love: '+ data.love + '</p>');
+    io.on('key', function(data) {
+      $('body').append(data['channel']).append(data.players[0].name + "<br />");//'<p> Love: '+ data.love + '</p>');
     });
-    io.on('the_game', function(data) {
-    console(data);
-    $('body').append('<p> game: '+ data.toString() + '</p>');
+    $('.counter').click(function() {
+      io.emit('index');
     });
-  
+    
+    

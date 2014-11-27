@@ -5,9 +5,9 @@ block content
 	p Welcome to #{title}. Set up your game here. It's that easy.
 	section(class="masthead")
 		div(class="inputs")
-			form(action="/play/:session")
-				input(type="text" name="session_name" placeholder="What's the name of the game?")
-				input(type="text" name="player_name" placeholder="What shall we call you, son?" class="username")
+			form(method="post" action="/generate")
+				input(type="text" id="session_name" placeholder="What's the name of the game?")
+				input(type="text" id="player_name" placeholder="What shall we call you, son?" class="username")
 				input(type="submit" name="create_session" value="Let's play some Nanz!")
 
 		//- select(name="player" class="player")
