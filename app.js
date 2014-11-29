@@ -52,6 +52,10 @@ app.get('/play/:channel', function(req, res){
   });
 });
 
+app.get('/example', function(req, res) {
+  res.render('example');
+});
+
 // Socket Routing
 app.io.route('start', function(req){
   app.io.broadcast('hahaha');
