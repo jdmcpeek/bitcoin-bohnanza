@@ -7,8 +7,8 @@ var plot_schema = plot_model.schema;
 
 var player_schema = new Schema({
   name:         {type: String, required: true},
-  hand:         {type: [bean_schema], default: [], required: true},
-  plots:        {type: [plot_schema], default: [], required: true},
+  hand:         {type: [bean_schema], default: []},
+  plots:        {type: [plot_schema], default: []},
   gold:         {type: Number, default: 0, required: true}
 });
 
@@ -19,8 +19,8 @@ player_schema.statics.create = function(params) {
   return new_player;
 };
 
-// Take these beans, put them in your hand
-// Accepts only arrays
+//Take these beans, put them in your hand
+//Accepts only arrays
 player_schema.methods.add_to_hand = function(beans){
   for(var i=0; i<beans.length; i++)
     this.hand.push(beans[i]);

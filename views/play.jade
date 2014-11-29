@@ -1,10 +1,6 @@
 extends layout
 
 block content
-  h1= title
-  p This is your game.
-  select(name="player")
-    option(value="David") David
-    option(value="Harry") Harry
-    option(value="Eli") Eli
-  
+  h1 Channel: #{game.channel}
+  h1(id="players") Players: #{game.players}
+  //- so we have a game, we need to keep it updated, modify it, and display it

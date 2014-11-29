@@ -1,9 +1,8 @@
-var bean_model = require('./bean');
-var player_model = require('./player');
-var game_model = require('./game');
-var Steven = player_model.create({name: "Steven"});
-var David = player_model.create({name: "David"});
-var game = game_model.create({channel: "nanzers", players: [Steven, David]});
+var mongoose = require('mongoose');
+var game_model = require('./model/game');
+var game = game_model.create("nanzers", "Steven");
+game.add_player("David");
+
 console.log("Ready to go");
 console.log("Channel Name:" + game.channel);
 console.log("Shuffling the Deck");
@@ -34,6 +33,30 @@ console.log();
 
 console.log("Taking Steven's last card and planting it himself...");
 var stevens_bean = game.players[0].get_from_hand(0);
-Steven.plant([stevens_bean], 0);
+game.players[0].plant([stevens_bean], 0);
 console.log("Stevie's plots[0]");
 console.log(game.players[0].plots[0].beans);
+
+console.log("Time for some DB play");
+mongoose.connect('mongodb://localhost/test');
+db = mongoose.connection;
+var disp_players = function(game){
+  console.log("Players:");
+  for(var i=0; i<game.players.length; i++)
+    console.log("    " + game.players[i].name);
+};
+
+db.on('open', function callback() {
+  console.log("Making a new game");
+  var db_game = game_model.create("Test","Steven");
+  disp_players(db_game);
+  console.log("Adding Dav-id");
+  db_game.add_player("Dav-id");
+  disp_players(db_game);
+  console.log("Let's save this game!");
+    db_game.save(function(err){
+    if(err) console.error(err);
+  });
+});
+
+db.on('error', console.error.bind(console, 'connection error:'));

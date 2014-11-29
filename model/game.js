@@ -4,17 +4,18 @@ var bean_model = require('./bean');
 var bean_schema = bean_model.schema;
 var player_model = require('./player');
 var player_schema = player_model.schema;
+
 var game_schema = new Schema({
-  channel:        {type: String, required: true},
+  channel:        {type: String, required: true, unique: true},
   round:          {type: Number, default: 0, required: true},
   current_player: {type: Number, default: 0, required: true},
-  deck:           {type: [bean_schema], default: [], required: true},
-  discard:        {type: [bean_schema], default: [], required: true},
+  deck:           {type: [bean_schema], default: []},
+  discard:        {type: [bean_schema], default: []},
   players:        {type: [player_schema], required: true}
 });
 
 //Alternate Constructor
-game_schema.statics.create = function(params) {
+game_schema.statics.create = function(channel_name, player_name) {
     totals = {
     "coffee": 24,
     "wax": 22,
@@ -35,9 +36,16 @@ game_schema.statics.create = function(params) {
       deck.push(new_bean);
     }
   }
-  var new_game = new this(params);
+  var new_player = player_model.create({name: player_name});
+  var new_game = new this({channel: channel_name, players: [new_player]});
   new_game.deck = deck;
   return new_game;
+};
+
+//Add a new player
+game_schema.methods.add_player = function(player_name) {
+  var new_player = player_model.create({name: player_name});
+  this.players.push(new_player);
 };
 
 //Shuffles this.deck

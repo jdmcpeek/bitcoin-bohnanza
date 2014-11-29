@@ -1,12 +1,12 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var schema = new Schema({
+var bean_schema = new Schema({
 	type: {type: String, required: true}
 });
 
-// This way we only store an _id and the type
-schema.methods.map = function() {
+//This way we only store an _id and the type
+bean_schema.methods.map = function() {
 	types = {
 		"black-eyed": {
 			"_id": "black-eyed",
@@ -99,4 +99,4 @@ schema.methods.map = function() {
 	return types[this.type];
 };
 
-module.exports = mongoose.model('Bean', schema);
+module.exports = mongoose.model('Bean', bean_schema);

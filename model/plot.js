@@ -4,9 +4,8 @@ var bean_schema = bean_model.schema;
 var Schema = mongoose.Schema;
 
 var plot_schema = new Schema({
-  beans:  {type: [bean_schema], default: [], required: true}
+  beans:  {type: [bean_schema], default: []}
 });
-
 
 //Plant means add
 plot_schema.methods.plant = function(beans){
