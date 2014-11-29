@@ -52,8 +52,8 @@ app.get('/play/:channel', function(req, res){
   });
 });
 
-app.get('/example', function(req, res) {
-  res.render('example');
+app.io.route('add_player', function(req){
+  console.log('add_player event received');
 });
 
 // Socket Routing

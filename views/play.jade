@@ -1,7 +1,33 @@
 extends layout
 
-block content.
-  <h1>Channel: #{game.channel}</h1>
-  <h1 id="players"> Players: #{game.players}</h1>
-
-  <!-- so we have a game, we need to keep it updated, modify it, and display it -->
+block content
+  p Channel: #{game.channel}
+  p(id="players") Players: #{game.players}
+  div(class="actions")
+    form(action="#" class="add_players")
+      input(class="new_player_name" placeholder="new player name")
+      button(class="new_player_name") Add player
+    form(action="#" class="trade")
+      input(class="p1" placeholder="p1")
+      input(class="index_p1" placeholder="index_p1")
+      input(class="p2" placeholder="p2")
+      input(class="index_p2" placeholder="index_p2")
+      button(class="trade") Trade cards 
+  div(ng-controller="gameController")
+    p {{ex}}
+  script.
+    var io = io.connect();
+    
+    $(document).ready(function() {
+      
+      $('button.new_player_name').click(function(){
+        var name = $('input.new_player_name').val();
+        io.emit('add_player', name);
+      });
+      
+      
+      
+      
+      
+      
+    });

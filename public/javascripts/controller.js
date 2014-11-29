@@ -5,7 +5,7 @@ var example = require('../../game_example.js');
 var game = angular.module('game', []);
 
 game.controller('gameController', function($scope) {
-  $scope.example = example;
+  $scope.ex = "hi"
 
 
 });
