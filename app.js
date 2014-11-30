@@ -62,17 +62,19 @@ app.io.route('ready', function(req){
   });
 });
 
-
+//Add a new player on socket broad
 app.io.route('add_player', function(req){
-  var channel = req.data.channel;
-  var new_player = req.data.player;
-  console.log(new_player);
-  var game = game_model.find({channel: channel});
-  game.add_player(new_player);
-  // game_model.find({channel: channel}, function(err, game) {
-  //   game.methods.add_player(new_player);
-  //   io.emit('update', "New player on the field: " + new_player);
-  // });
+  game_model.findOne({channel: req.data.channel}, function(err, game){
+    if(err) console.error(err);
+    if(game === null) console.error("No such game: " + req.data.channel);
+    else {
+      game.add_player(req.data.player);
+      game.save(function(err, game){
+        if(err) console.error(err);
+        app.io.broadcast('update', game);
+      });
+    }
+  });
 });
 
 // app.io.route('players', {
