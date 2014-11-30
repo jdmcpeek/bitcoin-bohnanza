@@ -13,21 +13,22 @@ block content
       input(class="p2" placeholder="p2")
       input(class="index_p2" placeholder="index_p2")
       button(class="trade") Trade cards 
-  div(ng-controller="gameController")
-    p {{ex}}
   script.
     var io = io.connect();
+    var url = window.location.pathname;
+    var segments = url.split( '/' );
+    var channel = segments[2];
+    io.emit('ready', channel);
+    //- io.on('real_time', function(data){
+    //-   console.log(data);
+    //- })
     
-    $(document).ready(function() {
-      
+    
+    
+    $(document).ready(function() {    
       $('button.new_player_name').click(function(){
         var name = $('input.new_player_name').val();
-        io.emit('add_player', name);
-      });
-      
-      
-      
-      
-      
-      
+        console.log();
+        io.emit('add_player', game);
+      });  
     });

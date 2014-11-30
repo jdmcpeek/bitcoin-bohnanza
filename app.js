@@ -52,8 +52,13 @@ app.get('/play/:channel', function(req, res){
   });
 });
 
+app.io.route('ready', function(req){
+  var game = game_model.findOne({channel: req.data});
+  app.io.broadcast('real_time', game);
+});
+
 app.io.route('add_player', function(req){
-  console.log('add_player event received');
+  console.log(req.data);
 });
 
 // Socket Routing
