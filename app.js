@@ -52,19 +52,45 @@ app.get('/play/:channel', function(req, res){
   });
 });
 
+/* Socket routing */
 app.io.route('ready', function(req){
-  var game = game_model.findOne({channel: req.data});
-  app.io.broadcast('real_time', game);
+  // console.log(req.data);
+  var channel = req.data;
+  game_model.find({channel: channel}, function(err, game){
+    // console.log(game);
+    app.io.broadcast('real_time', game);
+  });
 });
+
 
 app.io.route('add_player', function(req){
-  console.log(req.data);
+  var channel = req.data.channel;
+  var new_player = req.data.player;
+  console.log(new_player);
+  var game = game_model.find({channel: channel});
+  game.add_player(new_player);
+  // game_model.find({channel: channel}, function(err, game) {
+  //   game.methods.add_player(new_player);
+  //   io.emit('update', "New player on the field: " + new_player);
+  // });
 });
 
-// Socket Routing
-app.io.route('start', function(req){
-  app.io.broadcast('hahaha');
-});
+// app.io.route('players', {
+//   create: function(req) {
+//     var channel = req.data.channel;
+//     var new_player = req.data.player;
+//     game_model.find({channel: channel}, function(err, game) {
+//       game.add_player(new_player);
+//         io.emit('update', new_player);
+//     });
+//   },
+//   update: function(req) {
+//     // update your customer
+//   },
+//   remove: function(req) {
+//     // remove your customer
+//   },
+// });
 
 // Listen!
 app.listen(7076, function(err) {
