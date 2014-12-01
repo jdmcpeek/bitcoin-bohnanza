@@ -1,8 +1,8 @@
 extends layout
 
 block content
-  p Channel: #{game.channel}
-  p(id="players") Players: #{game.players}
+  p Channel: #{channel}
+  //- p(id="players") Players:
   div(class="actions")
     form(action="#" class="add_players")
       input(class="new_player_name" placeholder="new player name")
@@ -16,9 +16,7 @@ block content
     div(class="updates")
   script.
     var io = io.connect();
-    var url = window.location.pathname;
-    var segments = url.split( '/' );
-    var channel = segments[2];
+    var channel = '#{channel}';
     io.emit('ready', channel);
     io.on('update', function(data){
       console.log(data);
@@ -30,7 +28,6 @@ block content
     $(document).ready(function(){    
       $('button.new_player_name').click(function(){
         var name = $('input.new_player_name').val();
-        //- console.log(name);
         io.emit('add_player', {channel: channel, player: name});
       });  
     });

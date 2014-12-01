@@ -1,28 +1,25 @@
 var path = require('path');
 var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
 
-// Database Stuffz
+/*** Database & Model ***/
 var mongoose = require('mongoose');
 var game_model = require('./model/game');
-
 db = mongoose.connection;
 mongoose.connect('mongodb://localhost/test');
 db.on('error', console.error.bind(console, 'connection error:'));
 db.on('open', function() {console.log('connected to database');});
 
+/*** Express.io ***/
 var express = require('express.io');
 var app = express().http().io();
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
-
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// Traditional Routing
+/*** Traditional Routing ***/
 // Display the starting page
 app.get('/', function(req, res){
   //probably also should find a better query.
@@ -35,7 +32,6 @@ app.get('/', function(req, res){
 
 // Generate a new game
 app.post('/generate', function(req, res){
-  //console.log(req.body);
   var game = game_model.create(req.body.channel_name, req.body.player_name);
   game.save(function(err){
     if(err) res.status(403).send(err.message);
@@ -48,11 +44,14 @@ app.get('/play/:channel', function(req, res){
   game_model.findOne({channel: req.params.channel}, function(err, game){
     if (err) console.error(err);
     if (game === null) res.status(404).send("No such game!");
-    else res.render('play', {game: game});
+    else {
+      res.render('play', {channel: req.params.channel});
+    }
   });
 });
 
-/* Socket routing */
+/*** Socket Routing ***/
+// When a page emits ready, give it the game object.
 app.io.route('ready', function(req){
   // console.log(req.data);
   var channel = req.data;
@@ -68,7 +67,7 @@ var broadcast_error = function(message){
   app.io.broadcast('error', message);
 };
 
-//Add a new player on socket broad
+// When a page emits add_player, add it to the game object and save it
 app.io.route('add_player', function(req){
   game_model.findOne({channel: req.data.channel}, function(err, game){
     if(err) console.error(err);
@@ -83,7 +82,7 @@ app.io.route('add_player', function(req){
   });
 });
 
-//Execute player trade
+// When a page emits make_trade, validate the req., execute the change, and save it
 app.io.route('make_trade', function(req){
   game_model.findOne({channel: req.data.channel}, function(err, game){
     if(err) console.error(err);
@@ -111,24 +110,7 @@ app.io.route('make_trade', function(req){
   });
 });
 
-// app.io.route('players', {
-//   create: function(req) {
-//     var channel = req.data.channel;
-//     var new_player = req.data.player;
-//     game_model.find({channel: channel}, function(err, game) {
-//       game.add_player(new_player);
-//         io.emit('update', new_player);
-//     });
-//   },
-//   update: function(req) {
-//     // update your customer
-//   },
-//   remove: function(req) {
-//     // remove your customer
-//   },
-// });
-
-// Listen!
+/*** Listen! ***/
 app.listen(7076, function(err) {
   if (err) {
     console.log("failed to connect");
