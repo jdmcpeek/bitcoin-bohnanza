@@ -17,6 +17,7 @@ block content
   script.
     var io = io.connect();
     var channel = '#{channel}';
+    var game = #{game};
     io.emit('ready', channel);
     io.on('update', function(data){
       console.log(data);
