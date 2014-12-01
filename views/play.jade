@@ -23,11 +23,30 @@ block content
     io.on('update', function(data){
       console.log(data);
     });
+    io.on('error', function(err){
+      console.error(err);
+    });
     
-    $(document).ready(function() {    
+    $(document).ready(function(){    
       $('button.new_player_name').click(function(){
         var name = $('input.new_player_name').val();
         //- console.log(name);
         io.emit('add_player', {channel: channel, player: name});
       });  
     });
+    
+    $(document).ready(function(){    
+      $('button.make_trade').click(function(){
+        var player1 = $('input.p1').val();
+        var player2 = $('input.p2').val();
+        var card1 = $('input.index_p1').val();
+        var card2 = $('input.index_p2').val();
+        
+        io.emit('make_trade', {channel: channel, 
+                               player1: player1,
+                               player2: player2,
+                               card1: card1,
+                               card2: card2});
+      });   
+    });
+    

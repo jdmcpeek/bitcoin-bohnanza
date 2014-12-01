@@ -62,17 +62,51 @@ app.io.route('ready', function(req){
   });
 });
 
+// Error to console and socket
+var broadcast_error = function(message){
+  console.error(message);
+  app.io.broadcast('error', message);
+};
+
 //Add a new player on socket broad
 app.io.route('add_player', function(req){
   game_model.findOne({channel: req.data.channel}, function(err, game){
     if(err) console.error(err);
-    if(game === null) console.error("No such game: " + req.data.channel);
+    if(game === null) broadcast_error("No such game: " + req.data.channel);
     else {
       game.add_player(req.data.player);
       game.save(function(err, game){
-        if(err) console.error(err);
-        app.io.broadcast('update', game);
+        if(err) broadcast_error(err);
+        else app.io.broadcast('update', game);
       });
+    }
+  });
+});
+
+//Execute player trade
+app.io.route('make_trade', function(req){
+  game_model.findOne({channel: req.data.channel}, function(err, game){
+    if(err) console.error(err);
+    if(game === null) {
+      broadcast_error("No such game: " + req.data.channel);
+    }
+    else {
+      var p1 = game.find_player(req.data.player1);
+      var p2 = game.find_player(req.data.player2);
+      var c1 = req.data.card1;
+      var c2 = req.data.card2;
+      console.log({player1: p1, player2: p2, card1: c1, card2: c2});
+      if(p1 === undefined || p2 === undefined)
+        broadcast_error("Couldn't find both players in game.");
+      else if(game.players[p1].hand[c1] === undefined ||
+        game.players[p2].hand[c2] === undefined)
+        broadcast_error("Couldn't find both cards in game.");
+      else {
+        game.trade_to_hand(p1, c1, p2, c2);
+        game.save(function(err, game){
+          if(err) broadcast_error(err);
+        });
+      }
     }
   });
 });

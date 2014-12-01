@@ -48,6 +48,13 @@ game_schema.methods.add_player = function(player_name) {
   this.players.push(new_player);
 };
 
+//Find the player index of with this name
+game_schema.methods.find_player = function(player_name) {
+  for(var i=0; i<this.players.length; i++) {
+    if(this.players[i].name === player_name) return i;
+  }
+};
+
 //Shuffles this.deck
 game_schema.methods.shuffle_deck = function () {
   //http://goo.gl/Uh6MLE
