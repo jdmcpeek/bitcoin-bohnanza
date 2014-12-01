@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var bean_schema = new Schema({
 	type: {type: String, required: true}
-});
+}, {_id: false,});
 
 //This way we only store an _id and the type
 bean_schema.methods.map = function() {

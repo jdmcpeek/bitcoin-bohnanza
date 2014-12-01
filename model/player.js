@@ -6,10 +6,19 @@ var plot_model = require('./plot');
 var plot_schema = plot_model.schema;
 
 var player_schema = new Schema({
-  name:         {type: String, required: true},
-  hand:         {type: [bean_schema], default: []},
-  plots:        {type: [plot_schema], default: []},
-  gold:         {type: Number, default: 0, required: true}
+  _id:    {type: String, required: true, unique: true},
+  hand:   {type: [bean_schema], default: []},
+  plots:  {type: [plot_schema], default: []},
+  gold:   {type: Number, default: 0, required: true}
+});
+
+//name virtual to _id
+player_schema.virtual('name').get(function(){
+  return this._id;
+});
+
+player_schema.virtual('name').set(function(new_name){
+  this._id = new_name;
 });
 
 //Alternate Constructor

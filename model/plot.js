@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 
 var plot_schema = new Schema({
   beans:  {type: [bean_schema], default: []}
-});
+}, {_id: false});
 
 //Plant means add
 plot_schema.methods.plant = function(beans){
