@@ -42,10 +42,33 @@ game_schema.statics.create = function(channel_name, player_name) {
   return new_game;
 };
 
+//Virtual view for boilerplate game
+game_schema.virtual('strip').get(function(){
+    var object = {channel: this.channel, round: this.round, current_player: this.current_player, players: this.players};
+    object.toString = function(){
+      var g_string = "{channel: \'" + this.channel + "\', round: " + this.round + ", current_player: " + this.current_player + ", players: ";
+      var p_string = "[";
+      for(var i=0; i<this.players.length; i++){
+        p_string = (p_string === "[") ? p_string : p_string + ", ";
+        p_string = p_string + this.players[i].strip.toString();
+      }
+      p_string = p_string + "]";
+      return g_string + p_string + "}";
+    };
+    return object;
+});
+
 //Add a new player
 game_schema.methods.add_player = function(player_name) {
   var new_player = player_model.create({name: player_name});
   this.players.push(new_player);
+};
+
+//Find the player index of with this name
+game_schema.methods.find_player = function(player_name) {
+  for(var i=0; i<this.players.length; i++) {
+    if(this.players[i].name === player_name) return i;
+  }
 };
 
 //Shuffles this.deck

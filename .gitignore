@@ -2,6 +2,7 @@
 
 # Dependency directory
 node_modules
+bower_components
 
 # Logs
 *.log

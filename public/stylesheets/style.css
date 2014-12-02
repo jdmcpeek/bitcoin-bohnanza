@@ -23,6 +23,7 @@ input {
   margin-right: 2em;
 }
 
+
 .sessions {
     width: 40%;
     height: 25em;
@@ -33,4 +34,37 @@ input {
     /*top: 25em;*/
     padding: 2em;
 
+}
+
+.updates {
+  width: 40%;
+  height: 25em;
+  border-color: black;
+  border: solid;
+  position: absolute;
+  right: 3em;
+  /*top: 25em;*/
+  padding: 2em;
+}
+
+.actions .add_players {
+  display: block;
+  border-color: black;
+  position: absolute;
+  left: 3em;
+  border: solid;
+  /*top: 25em;*/
+  padding: 2em;
+}
+
+.actions .trade {
+  display:block;
+  position: absolute;
+  left: 3em;
+  top: 20em;
+  border-color: black;
+  border: solid;
+  /*top: 25em;*/
+  padding: 2em;
+  max-width: 30%;
 }

@@ -53,6 +53,12 @@ db.on('open', function callback() {
   console.log("Adding Dav-id");
   db_game.add_player("Dav-id");
   disp_players(db_game);
+  var c1 = game.draw_n(1);
+  db_game.players[0].add_to_hand(c1);
+  var c2 = game.draw_n(1);
+  db_game.players[1].add_to_hand(c2);
+  console.log(c1);
+  //console.log(c2);
   console.log("Let's save this game!");
     db_game.save(function(err){
     if(err) console.error(err);
