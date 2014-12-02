@@ -45,7 +45,8 @@ app.get('/play/:channel', function(req, res){
     if (err) console.error(err);
     if (game === null) res.status(404).send("No such game!");
     else {
-      res.render('play', {channel: req.params.channel, game: game});
+      //gotta watch for no-sql injection
+      res.render('play', {channel: req.params.channel, game: game.strip});
     }
   });
 });
