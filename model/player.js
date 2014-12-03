@@ -6,7 +6,7 @@ var plot_model = require('./plot');
 var plot_schema = plot_model.schema;
 
 var player_schema = new Schema({
-  _id:    {type: String, required: true, unique: true},
+  _id:    {type: String, required: true},
   hand:   {type: [bean_schema], default: []},
   plots:  {type: [plot_schema], default: []},
   gold:   {type: Number, default: 0, required: true}
@@ -24,7 +24,7 @@ player_schema.virtual('name').set(function(new_name){
 
 //strip getter
 player_schema.virtual('strip').get(function(){
-  var object = {name: this._id, plots: this.plots, gold: this.gold};
+  var object = {name: this.name, plots: this.plots, gold: this.gold};
   object.toString = function() {
     var p_string = "{name: \'" + this.name + "\', plots: [" + this.plots + "], gold: " + this.gold + "}";
     return p_string;
