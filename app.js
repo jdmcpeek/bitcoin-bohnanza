@@ -1,145 +1,167 @@
-var path = require('path');
-var logger = require('morgan');
-
-/*** Database & Model ***/
-var mongoose = require('mongoose');
-var game_model = require('./model/game');
-db = mongoose.connection;
-mongoose.connect('mongodb://localhost/test');
-db.on('error', console.error.bind(console, 'connection error:'));
-db.on('open', function() {console.log('connected to database');});
+/*** Logging and Debug ***/
+var debug = require("debug"),
+  note = debug("app:note"),
+  //send real errors to console & debug
+  error = function (message) {
+    debug("app:error")(message);
+    console.error(message);
+  },
+  //send log to console & debug
+  log = function (message) {
+    debug("app:log")(message);
+    console.log(message);
+  },
+  logger = require("morgan");
 
 /*** Express.io ***/
-var express = require('express.io');
-var app = express().http().io();
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+var path = require("path");
+var express = require("express.io"),
+  app = express().http().io(),
+  cookieParser = require("cookie-parser"),
+  bodyParser = require("body-parser");
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, "public")));
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "jade");
+
+/*** Model ***/
+var game_model = require("./model/game");
 
 /*** Traditional Routing ***/
 // Display the starting page
-app.get('/', function(req, res){
+app.get("/", function (req, res) {
   //probably also should find a better query.
-  game_model.find({},{channel: 1, players: 1}, function(err, games){
-      if(err) console.error(err); //too extreme
-      //probably should send like 10, get more on socket
-      else res.render('index', {games: games});
-      });
+  game_model.find({}, {
+    channel: 1,
+    players: 1
+  }, function (err, games) {
+    if (err) error(err); //too extreme
+    //probably should send like 10, get more on socket
+    else res.render("index", {
+      games: games
+    });
+  });
 });
 
 // Generate a new game
-app.post('/generate', function(req, res){
+app.post("/generate", function (req, res) {
   var game = game_model.create(req.body.channel_name, req.body.player_name);
-  game.save(function(err){
-    if(err) res.status(403).send(err.message);
-    else res.redirect(301, "/play/"+req.body.channel_name);
+  game.save(function (err) {
+    if (err) res.status(403).send(err.message);
+    else res.redirect(301, "/play/" + req.body.channel_name);
   });
 });
 
 // Resume a game - how do we tell who is playing?
-app.get('/play/:channel', function(req, res){
-  game_model.findOne({channel: req.params.channel}, function(err, game){
-    if (err) console.error(err);
+app.get("/play/:channel", function (req, res) {
+  game_model.findOne({
+    channel: req.params.channel
+  }, function (err, game) {
+    if (err) error(err);
     if (game === null) res.status(404).send("No such game!");
     else {
       //gotta watch for no-sql injection
-      res.render('play', {channel: req.params.channel, game: game.strip});
+      res.render("play", {
+        channel: req.params.channel,
+        game: game.strip
+      });
     }
   });
 });
 
 /*** Socket Routing ***/
+// Error to console and socket
+var broadcast_error = function (message) {
+  error(message);
+  app.io.broadcast("error", message);
+};
+
 // When a page emits ready, give it the game object.
-app.io.route('ready', function(req){
-  // console.log(req.data);
+app.io.route("ready", function (req) {
   var channel = req.data;
-  game_model.find({channel: channel}, function(err, game){
-    // console.log(game);
-    app.io.broadcast('real_time', game);
+  game_model.find({
+    channel: channel
+  }, function (err, game) {
+    app.io.broadcast("real_time", game);
   });
 });
 
-// Error to console and socket
-var broadcast_error = function(message){
-  console.error(message);
-  app.io.broadcast('error', message);
-};
-
 // When a page emits add_player, add it to the game object and save it
-app.io.route('add_player', function(req){
-  game_model.findOne({channel: req.data.channel}, function(err, game){
-    if(err) console.error(err);
-    if(game === null) broadcast_error("No such game: " + req.data.channel);
+app.io.route("add_player", function (req) {
+  game_model.findOne({
+    channel: req.data.channel
+  }, function (err, game) {
+    if (err) error(err);
+    if (game === null) broadcast_error("No such game: " + req.data.channel);
     else {
       game.add_player(req.data.player);
-      game.save(function(err, game){
-        if(err) broadcast_error(err);
-        else app.io.broadcast('update', game);
+      game.save(function (err, game) {
+        if (err) broadcast_error(err);
+        else app.io.broadcast("update", game);
       });
     }
   });
 });
 
-// When a page emits make_trade, validate the req., execute the change, and save it
-app.io.route('make_trade', function(req){
-  game_model.findOne({channel: req.data.channel}, function(err, game){
-    if(err) console.error(err);
-    if(game === null) {
+// When a page emits make_trade, validate the req., execute the change, and save
+// it
+app.io.route("make_trade", function (req) {
+  game_model.findOne({
+    channel: req.data.channel
+  }, function (err, game) {
+    if (err) console.error(err);
+
+    if (game === null) {
       broadcast_error("No such game: " + req.data.channel);
-    }
-    else {
+    } else {
       var p1 = game.find_player(req.data.player1);
       var p2 = game.find_player(req.data.player2);
       var c1 = req.data.card1;
       var c2 = req.data.card2;
-      console.log({player1: p1, player2: p2, card1: c1, card2: c2});
-      if(p1 === undefined || p2 === undefined)
+      note("Trade - " + game.channel + ": " + {
+        player1: p1,
+        player2: p2,
+        card1: c1,
+        card2: c2
+      });
+
+      if (p1 === undefined || p2 === undefined)
         broadcast_error("Couldn't find both players in game.");
-      else if(game.players[p1].hand[c1] === undefined ||
+
+      else if (game.players[p1].hand[c1] === undefined ||
         game.players[p2].hand[c2] === undefined)
         broadcast_error("Couldn't find both cards in game.");
+
       else {
         game.trade_to_hand(p1, c1, p2, c2);
-        game.save(function(err, game){
-          if(err) broadcast_error(err);
+        game.save(function (err, game) {
+          if (err) broadcast_error(err);
         });
       }
     }
   });
 });
 
-/*** Listen! ***/
-app.listen(7076, function(err) {
-  if (err) {
-    console.log("failed to connect");
-  }
-  console.log("listening on port 7076");
-});
-
-//Uncomment after placing your favicon in /pubdc
-//app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+app.use(function (req, res, next) {
+  var err = new Error("Not Found");
   err.status = 404;
   next(err);
 });
 
-// error handlers
+/*** Error Handlers ***/
 
 // development error handler
 // will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
+if (app.get("env") === "development") {
+  app.use(function (err, req, res, next) {
     res.status(err.status || 500);
-    res.render('error', {
+    res.render("error", {
       message: err.message,
       error: err
     });
@@ -148,9 +170,9 @@ if (app.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   res.status(err.status || 500);
-  res.render('error', {
+  res.render("error", {
     message: err.message,
     error: {}
   });
