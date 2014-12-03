@@ -1,5 +1,5 @@
-var mongoose = require('mongoose');
-var bean_model = require('./bean');
+var mongoose = require("mongoose");
+var bean_model = require("./bean");
 var bean_schema = bean_model.schema;
 var Schema = mongoose.Schema;
 
@@ -35,5 +35,5 @@ var bean_validator = function(beans) {
   return true;
 };
 
-plot_schema.path('beans').validate(bean_validator, "beans in a plot must be of one type!");
-module.exports = mongoose.model('Plot', plot_schema);
+plot_schema.path("beans").validate(bean_validator, "beans in a plot must be of one type!");
+module.exports = mongoose.model("Plot", plot_schema);
