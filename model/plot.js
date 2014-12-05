@@ -7,6 +7,16 @@ var plot_schema = new Schema({
   beans:  {type: [bean_schema], default: []}
 }, {_id: false});
 
+//strip getter
+plot_schema.virtual("strip").get(function(){
+  var stripped_beans = [];
+  for (var i = 0; i < this.beans.length; i++) {
+    stripped_beans[i] = this.beans[i].strip;
+  }
+
+  return {beans: stripped_beans};
+});
+
 //Plant means add
 plot_schema.methods.plant = function(beans){
     for(var i=0; i<beans.length; i++){

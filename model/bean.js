@@ -10,6 +10,11 @@ var bean_schema = new Schema({
   _id: false,
 });
 
+//strip getter
+bean_schema.virtual("strip").get(function(){
+  return this.type;
+});
+
 //This way we only store an _id and the type
 bean_schema.methods.map = function () {
   types = {

@@ -38,17 +38,14 @@ player_schema.virtual("name").set(function (new_name) {
 
 //strip getter
 player_schema.virtual("strip").get(function(){
-  var object = {name: this.name, plots: this.plots, gold: this.gold};
-  object.toString = function() {
-    var p_string = "{name: \'" + this.name + "\', plots: [" + this.plots + "], gold: " + this.gold + "}";
-    return p_string;
-  };
-  return object;
+  var strip = function(element) {return element.strip;};
+
+  return {name: this.name, plots: this.plots.map(strip), gold: this.gold};
 });
 
 //Alternate Constructor
-player_schema.statics.create = function (params) {
-  var new_player = new this(params);
+player_schema.statics.create = function (player_name) {
+  var new_player = new this({name: player_name});
   new_player.plots = [new plot_model(), new plot_model()];
   return new_player;
 };

@@ -72,9 +72,7 @@ game_schema.statics.create = function (channel_name, player_name) {
       deck.push(new_bean);
     }
   }
-  var new_player = player_model.create({
-    name: player_name
-  });
+  var new_player = player_model.create(player_name);
   var new_game = new this({
     channel: channel_name,
     players: [new_player]
@@ -85,37 +83,19 @@ game_schema.statics.create = function (channel_name, player_name) {
 
 //Virtual view for boilerplate game
 game_schema.virtual("strip").get(function () {
-  var stripped_players = [];
-  for (var i = 0; i < this.players.length; i++) {
-    stripped_players[i] = this.players[i].strip;
-  }
+  var strip = function(element) {return element.strip;};
 
-  var object = {
+  return {
     channel: this.channel,
     round: this.round,
     current_player: this.current_player,
-    players: stripped_players
+    players: this.players.map(strip)
   };
-
-  object.toString = function () {
-    var g_string = "{channel: \'" + this.channel + "\', round: " + this.round +
-      ", current_player: " + this.current_player + ", players: ";
-    var p_string = "[";
-    for (var i = 0; i < object.players.length; i++) {
-      p_string = (p_string === "[") ? p_string : p_string + ", ";
-      p_string = p_string + object.players[i].toString();
-    }
-    p_string = p_string + "]";
-    return g_string + p_string + "}";
-  };
-  return object;
 });
 
 //Add a new player
 game_schema.methods.add_player = function (player_name) {
-  var new_player = player_model.create({
-    name: player_name
-  });
+  var new_player = player_model.create(player_name);
   this.players.push(new_player);
 };
 

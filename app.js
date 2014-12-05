@@ -66,8 +66,7 @@ app.get("/play/:channel", function (req, res) {
     else {
       //gotta watch for no-sql injection
       res.render("play", {
-        channel: req.params.channel,
-        game: game.strip
+        channel: req.params.channel
       });
     }
   });
