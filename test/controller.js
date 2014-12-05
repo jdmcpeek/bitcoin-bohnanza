@@ -5,9 +5,26 @@ var gameController = require("../public/javascripts/controller.js");
 
 
 describe("controller", function(){
-  it("should be associated with a particular channel", function(){
+
+  describe("#load", function(){
+    it("should connect to a web socket on load", function(){
+
+    });
+
+    it("should emit a 'ready' event with the channel name on load", function(){
+
+    });
+
+    it("should be associated with a particular channel", function(){
+
+    });
+
+    it("should define the $scope", function(){
+
+    });
 
   });
+
 
   describe("#update", function(){
 
