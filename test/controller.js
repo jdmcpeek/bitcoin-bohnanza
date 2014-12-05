@@ -6,10 +6,8 @@ var gameController = require("../public/javascripts/controller.js");
 /*
   TODO
   - inject angular dependencies into these test cases. Must include controller.js from '/public/javascripts'
-
+  - angular is not defined in /public/javascripts/controller.js. Find some way to inject that dependency as well.
 */
-
-
 
 describe("controller", function(){
 
@@ -19,11 +17,8 @@ describe("controller", function(){
   }));
 
   describe("#load", function(){
-    it("should connect to a web socket on load", function(){
 
-    });
-
-    it("should emit a 'ready' event with the channel name on load", function(){
+    it("should connect to a web socket and emit a 'ready' event with the channel name on load", function(){
 
     });
 
@@ -37,8 +32,8 @@ describe("controller", function(){
 
   });
 
-  // The beauty of Angular is that our controller will allow the player making changes to see
-  // immediate effects on the screen; the controller will update immediately upon DOM events;
+  // Our controller will allow the player making changes to see immediate effects on the screen;
+  // the controller will update immediately upon DOM events;
   // the only lag will happen for other players, and still they'll receive all updates at once,
   // so it will be unnoticeable.
   describe("#update", function(){
