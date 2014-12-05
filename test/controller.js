@@ -3,8 +3,20 @@ var game_model = require("../model/game");
 var mongoose = require("mongoose");
 var gameController = require("../public/javascripts/controller.js");
 
+/*
+  TODO
+  - inject angular dependencies into these test cases. Must include controller.js from '/public/javascripts'
+
+*/
+
+
 
 describe("controller", function(){
+
+  beforeEach(inject(function($rootScope, $controller) {
+    scope = $rootScope.$new();
+    ctrl = $controller('gameController', {$scope: scope});
+  }));
 
   describe("#load", function(){
     it("should connect to a web socket on load", function(){
