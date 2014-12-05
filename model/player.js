@@ -37,7 +37,7 @@ player_schema.virtual("name").set(function (new_name) {
 });
 
 //strip getter
-player_schema.virtual('strip').get(function(){
+player_schema.virtual("strip").get(function(){
   var object = {name: this.name, plots: this.plots, gold: this.gold};
   object.toString = function() {
     var p_string = "{name: \'" + this.name + "\', plots: [" + this.plots + "], gold: " + this.gold + "}";

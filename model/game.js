@@ -36,11 +36,11 @@ var game_schema = new Schema({
 });
 
 // Make sure no two players have the same name
-game_schema.pre('save', function(next){
+game_schema.pre("save", function (next) {
   names = {};
-  for(var i=0; i<this.players.length; i++) {
-    if(names[this.players[i].name] !== undefined) {
-      next(new Error('Two players cannot have the same name.'));
+  for (var i = 0; i < this.players.length; i++) {
+    if (names[this.players[i].name] !== undefined) {
+      next(new Error("Two players cannot have the same name."));
     }
     names[this.players[i].name] = true;
   }
@@ -84,20 +84,24 @@ game_schema.statics.create = function (channel_name, player_name) {
 };
 
 //Virtual view for boilerplate game
-game_schema.virtual('strip').get(function(){
+game_schema.virtual("strip").get(function () {
   var stripped_players = [];
-  for(var i=0; i<this.players.length;i++){
-    stripped_players[i] =this.players[i].strip;
+  for (var i = 0; i < this.players.length; i++) {
+    stripped_players[i] = this.players[i].strip;
   }
 
-  var object = {channel: this.channel, round: this.round,
+  var object = {
+    channel: this.channel,
+    round: this.round,
     current_player: this.current_player,
-    players: stripped_players};
+    players: stripped_players
+  };
 
-  object.toString = function(){
-    var g_string = "{channel: \'" + this.channel + "\', round: " + this.round + ", current_player: " + this.current_player + ", players: ";
+  object.toString = function () {
+    var g_string = "{channel: \'" + this.channel + "\', round: " + this.round +
+      ", current_player: " + this.current_player + ", players: ";
     var p_string = "[";
-    for(var i=0; i<object.players.length; i++){
+    for (var i = 0; i < object.players.length; i++) {
       p_string = (p_string === "[") ? p_string : p_string + ", ";
       p_string = p_string + object.players[i].toString();
     }
