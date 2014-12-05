@@ -1,5 +1,5 @@
-var game = angular.module('game', []);
+var gameController = angular.module('gameController', []);
 
-game.controller('gameController', function($scope) {
+gameApp.controller('gameController', function($scope) {
   $scope.ex = "hi";
 });
