@@ -1,6 +1,7 @@
 var assert = require("assert"),
   player_model = require("../model/player"),
-  plot_model = require("../model/plot");
+  plot_model = require("../model/plot"),
+  bean_model = require("../model/bean");
 
 describe("Model: player", function() {
   describe(".create", function(){
