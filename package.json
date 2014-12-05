@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "node node_modules/mocha/bin/mocha"
+    "test": "istanbul cover _mocha"
   },
   "dependencies": {
     "body-parser": "~1.8.1",
@@ -20,6 +20,7 @@
     "uglify-js": "~2.4.15"
   },
   "devDependencies": {
-    "mocha": "~2.0.1"
+    "mocha": "~2.0.1",
+    "istanbul": "~0.3.4"
   }
 }
