@@ -57,36 +57,18 @@ describe("Model: game", function () {
 
   describe(".strip", function () {
     var game = game_model.create("channel", "player"),
+      player_model = require("../model/player"),
       strip = game.strip;
 
-    it("should have a channel", function () {
-      assert.equal(strip.channel, "channel");
-    });
+    it("should return a game-like object without a deck, discard, and players with no hands", function(){
+      var stripped = {
+        channel: "channel",
+        round: 0,
+        current_player: 0,
+        players: [player_model.create("player").strip]
+      };
 
-    it("should have a round", function () {
-      assert.equal(strip.round, 0);
-    });
-
-    it("should have a current_player", function () {
-      assert.equal(strip.current_player, 0);
-    });
-
-    it("should have a player with a name but no hand", function () {
-      assert.equal(game.players[0].name, game.players[0].name);
-      assert.equal(strip.players[0].name, "player");
-      assert.ok(strip.players[0].hand === undefined);
-      assert.equal(strip.players[0].plots.length, 2);
-      assert.equal(strip.players[0].plots[0].beans.length, 0);
-      assert.equal(strip.players[0].plots[1].beans.length, 0);
-      assert.equal(strip.players[0].gold, 0);
-    });
-
-    it("should not have a deck", function () {
-      assert.ok(strip.hand === undefined);
-    });
-
-    it("should not have a discard", function () {
-      assert.ok(strip.hand === undefined);
+      assert.deepEqual(game.strip, stripped);
     });
   });
 
