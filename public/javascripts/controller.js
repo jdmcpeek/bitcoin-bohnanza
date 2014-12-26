@@ -1,7 +1,10 @@
-var gameApp = angular.module('game', [])
-.controller('gameController', function($scope) {
-  $scope.hello = "hi Mr. Developer";
-});
+angular.module('bohnanza.controllers', []).
+controller('socketsCtrl', function($scope, socket){
+  // might be the same as gamePlayCtrl...
+}).
+controller('gamePlayCtrl', function(){
 
-// do I need to export this?
-// module.exports = gameApp;
+}).
+controller('mainPageCtrl', function($scope){
+
+});
