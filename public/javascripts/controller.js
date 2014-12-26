@@ -1,10 +1,7 @@
 angular.module('bohnanza.controllers', []).
-controller('socketsCtrl', function($scope, socket){
-  // might be the same as gamePlayCtrl...
-}).
-controller('gamePlayCtrl', function(){
-
+controller('gamePlayCtrl', function($scope, socket){
+  // do something
 }).
 controller('mainPageCtrl', function($scope){
-
+  $scope.test = ['David', 'Stevie', 'Eli', 'Harry'];
 });

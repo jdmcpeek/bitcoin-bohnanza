@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('bohnanza', [
   'bohnanza.controllers',
   'bohnanza.services',
