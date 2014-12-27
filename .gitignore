@@ -1,7 +1,9 @@
-# Let's keep this repo high & tight
+Let's keep this repo high and tight.
 
-# Dependency directory
 node_modules
+dist
+.tmp
+.sass-cache
 bower_components
 
 # Logs
