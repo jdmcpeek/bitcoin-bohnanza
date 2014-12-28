@@ -1,0 +1,34 @@
+#!/usr/bin/env node
+/*** Debug ***/
+var debug = require('debug'),
+    note = debug('weB-ohnanza:note'),
+    error = function(message) {
+      debug('weB-ohnanza:error')(message);
+      console.error(message);
+    },
+    log = function(message) {
+      debug('weB-ohnanza:log')(message);
+      console.log(message);
+    };
+
+/*** Database & Model ***/
+var mongoose = require('mongoose'),
+    db = mongoose.connection,
+    params = 'mongodb://localhost/test';
+
+mongoose.connect(params);
+db.on('error', error.bind(error, 'connection error with ' + params));
+
+/*** App ***/
+var app = require('../app');
+app.set('port', process.env.PORT || 3000);
+
+//once the database connection is established we can start the web-app
+db.on('open', function() {
+log('connected to database ' + params);
+  var server = app.listen(app.get('port'), function(err) {
+    if(err) error('Failed to listen on port ' + server.address().port);
+    var msg = 'Express server listening on port ' + server.address().port;
+    log(msg);
+  });
+});
