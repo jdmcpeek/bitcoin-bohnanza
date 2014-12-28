@@ -1,39 +1,40 @@
+'use strict';
 /*** Logging and Debug ***/
-var debug = require("debug"),
-  note = debug("app:note"),
+var debug = require('debug'),
+  note = debug('app:note'),
   //send real errors to console & debug
   error = function (message) {
-    debug("app:error")(message);
+    debug('app:error')(message);
     console.error(message);
   },
   //send log to console & debug
   log = function (message) {
-    debug("app:log")(message);
+    debug('app:log')(message);
     console.log(message);
   },
-  logger = require("morgan");
+  logger = require('morgan');
 
 /*** Express.io ***/
-var path = require("path");
-var express = require("express.io"),
+var path = require('path');
+var express = require('express.io'),
   app = express().http().io(),
-  cookieParser = require("cookie-parser"),
-  bodyParser = require("body-parser");
+  cookieParser = require('cookie-parser'),
+  bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
 }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "jade");
+app.use(express.static(path.join(__dirname, 'public')));
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 
 /*** Model ***/
-var game_model = require("./model/game");
+var game_model = require('./model/game');
 
 /*** Traditional Routing ***/
 // Display the starting page
-app.get("/", function (req, res) {
+app.get('/', function (req, res) {
   //probably also should find a better query.
   game_model.find({}, {
     channel: 1,
@@ -41,31 +42,31 @@ app.get("/", function (req, res) {
   }, function (err, games) {
     if (err) error(err); //too extreme
     //probably should send like 10, get more on socket
-    else res.render("index", {
+    else res.render('index', {
       games: games
     });
   });
 });
 
 // Generate a new game
-app.post("/generate", function (req, res) {
+app.post('/generate', function (req, res) {
   var game = game_model.create(req.body.channel_name, req.body.player_name);
   game.save(function (err) {
     if (err) res.status(403).send(err.message);
-    else res.redirect(301, "/play/" + req.body.channel_name);
+    else res.redirect(301, '/play/' + req.body.channel_name);
   });
 });
 
 // Resume a game - how do we tell who is playing?
-app.get("/play/:channel", function (req, res) {
+app.get('/play/:channel', function (req, res) {
   game_model.findOne({
     channel: req.params.channel
   }, function (err, game) {
     if (err) error(err);
-    if (game === null) res.status(404).send("No such game!");
+    if (game === null) res.status(404).send('No such game!');
     else {
       //gotta watch for no-sql injection
-      res.render("play", {
+      res.render('play', {
         channel: req.params.channel,
         game: game.strip
       });
@@ -77,31 +78,31 @@ app.get("/play/:channel", function (req, res) {
 // Error to console and socket
 var broadcast_error = function (message) {
   error(message);
-  app.io.broadcast("error", message);
+  app.io.broadcast('error', message);
 };
 
 // When a page emits ready, give it the game object.
-app.io.route("ready", function (req) {
+app.io.route('ready', function (req) {
   var channel = req.data;
   game_model.find({
     channel: channel
   }, function (err, game) {
-    app.io.broadcast("real_time", game);
+    app.io.broadcast('real_time', game);
   });
 });
 
 // When a page emits add_player, add it to the game object and save it
-app.io.route("add_player", function (req) {
+app.io.route('add_player', function (req) {
   game_model.findOne({
     channel: req.data.channel
   }, function (err, game) {
     if (err) error(err);
-    if (game === null) broadcast_error("No such game: " + req.data.channel);
+    if (game === null) broadcast_error('No such game: ' + req.data.channel);
     else {
       game.add_player(req.data.player);
       game.save(function (err, game) {
         if (err) broadcast_error(err);
-        else app.io.broadcast("update", game);
+        else app.io.broadcast('update', game);
       });
     }
   });
@@ -109,20 +110,20 @@ app.io.route("add_player", function (req) {
 
 // When a page emits make_trade, validate the req., execute the change, and save
 // it
-app.io.route("make_trade", function (req) {
+app.io.route('make_trade', function (req) {
   game_model.findOne({
     channel: req.data.channel
   }, function (err, game) {
     if (err) console.error(err);
 
     if (game === null) {
-      broadcast_error("No such game: " + req.data.channel);
+      broadcast_error('No such game: ' + req.data.channel);
     } else {
       var p1 = game.find_player(req.data.player1);
       var p2 = game.find_player(req.data.player2);
       var c1 = req.data.card1;
       var c2 = req.data.card2;
-      note("Trade - " + game.channel + ": " + {
+      note('Trade - ' + game.channel + ': ' + {
         player1: p1,
         player2: p2,
         card1: c1,
@@ -130,11 +131,11 @@ app.io.route("make_trade", function (req) {
       });
 
       if (p1 === undefined || p2 === undefined)
-        broadcast_error("Couldn't find both players in game.");
+        broadcast_error('Couldn\'t find both players in game.');
 
       else if (game.players[p1].hand[c1] === undefined ||
         game.players[p2].hand[c2] === undefined)
-        broadcast_error("Couldn't find both cards in game.");
+        broadcast_error('Couldn\'t find both cards in game.');
 
       else {
         game.trade_to_hand(p1, c1, p2, c2);
@@ -149,7 +150,7 @@ app.io.route("make_trade", function (req) {
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  var err = new Error("Not Found");
+  var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
@@ -158,10 +159,10 @@ app.use(function (req, res, next) {
 
 // development error handler
 // will print stacktrace
-if (app.get("env") === "development") {
+if (app.get('env') === 'development') {
   app.use(function (err, req, res, next) {
     res.status(err.status || 500);
-    res.render("error", {
+    res.render('error', {
       message: err.message,
       error: err
     });
@@ -172,7 +173,7 @@ if (app.get("env") === "development") {
 // no stacktraces leaked to user
 app.use(function (err, req, res, next) {
   res.status(err.status || 500);
-  res.render("error", {
+  res.render('error', {
     message: err.message,
     error: {}
   });
