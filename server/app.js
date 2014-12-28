@@ -15,16 +15,22 @@ var debug = require('debug'),
   logger = require('morgan');
 
 /*** Express.io ***/
-var path = require('path');
-var express = require('express.io'),
-  app = express().http().io(),
+
+var express = require('express'),
+  io = require('socket.io'),
+  http = require('http'),
+  app = express(),
   cookieParser = require('cookie-parser'),
   bodyParser = require('body-parser');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
-app.use(cookieParser());
+  server = http.createServer(app),
+  io = io.listen(server),
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({
+    extended: false
+  }));
+  app.use(cookieParser());
+
+var path = require('path');
 
 
 /*** Model ***/
