@@ -1,7 +1,43 @@
-<h1>Generate a new game here</h1>
+<div class="newgame-container">
+  <div class="col-md-12">
+    <h2 class="newgame-header">Generate a new game here</h2>
 
-<form action="post" ng-submit="#">
-  <input type="text" name="gameName" placeholder="game name">
-  <input type="text" name="leaderName" placeholder="leader name">
-  <input type="submit" name="createGame">
-</form>
+    <br>
+  </div>
+
+  <div class="newgame-form">
+
+    <form class="form-horizontal">
+
+
+      <!-- Text input-->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="gameName">Game Name</label>
+        <div class="col-md-5">
+          <input id="gameName" name="gameName" type="text" placeholder="Bohnanza Bitches" class="form-control input-md">
+
+        </div>
+      </div>
+
+      <!-- Text input-->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="leaderName">Leader Name</label>
+        <div class="col-md-5">
+          <input id="leaderName" name="leaderName" type="text" placeholder="David 'I want to go to the party' McGeek" class="form-control input-md">
+
+        </div>
+      </div>
+
+
+      <!-- Button -->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="createGame"></label>
+        <div class="col-md-5">
+          <button id="createGame" name="createGame" class="btn btn-success btn-block">Start Playing!</button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+
+</div>
