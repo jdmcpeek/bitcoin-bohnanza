@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc overview
- * @name weBOhnanzaApp
+ * @name weBohnanzaApp
  * @description
- * # weBOhnanzaApp
+ * # weBohnanzaApp
  *
  * Main module of the application.
  */
 angular
-  .module('weBOhnanzaApp', [
+  .module('weBohnanzaApp', [
     'ngAnimate',
     'ngCookies',
     'ngMessages',
@@ -23,6 +23,10 @@ angular
       .when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
+      })
+      .when('/newgame', {
+        templateUrl: 'views/newgame.html',
+        controller: 'NewgameCtrl'
       })
       .otherwise({
         redirectTo: '/'

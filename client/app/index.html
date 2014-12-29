@@ -15,7 +15,7 @@
     <!-- endbuild -->
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
   </head>
-  <body ng-app="weBOhnanzaApp">
+  <body ng-app="weBohnanzaApp">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -24,17 +24,17 @@
     <div class="container">
       <div class="header">
         <ul class="nav nav-pills pull-right">
-          <li class="active"><a ng-href="#">Home</a></li>
+          <li class="active"><a ng-href="#/">Home</a></li>
           <li><a ng-href="#/about">About</a></li>
-          <li><a ng-href="#">Contact</a></li>
+          <li><a ng-href="#/">Contact</a></li>
         </ul>
-        <h3 class="text-muted">weBOhnanza</h3>
+        <h3 class="text-muted">weBohnanza</h3>
       </div>
 
       <div ng-view=""></div>
 
       <div class="footer">
-        <p><i class="fa fa-heart"></i></span> from the Yeoman team</p>
+        <p><i class="fa fa-heart"></i></span> from the Nanza team</p>
       </div>
     </div>
 
@@ -86,6 +86,7 @@
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/newgame.js"></script>
         <!-- endbuild -->
 </body>
 </html>
