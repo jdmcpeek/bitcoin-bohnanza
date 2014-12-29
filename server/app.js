@@ -14,12 +14,10 @@ var debug = require('debug'),
   },
   logger = require('morgan');
 
-/*** Express.io ***/
 
 var express = require('express'),
   io = require('socket.io'),
   http = require('http'),
-  newgame = require('./routes/newgame'),
   app = express(),
   cookieParser = require('cookie-parser'),
   bodyParser = require('body-parser'),
@@ -31,6 +29,9 @@ var express = require('express'),
     extended: false
   }));
   app.use(cookieParser());
+
+var newgame = require('./routes/newgame');
+var play = require('./routes/play');
 
 
 
@@ -193,5 +194,6 @@ if (app.get('env') === 'production') {
 }
 
 app.use('/newgame', newgame);
+app.use('/play/:channel', play)
 
 module.exports = app;

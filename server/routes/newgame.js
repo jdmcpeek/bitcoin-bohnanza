@@ -20,13 +20,11 @@ router.post('/', function (req, res) {
   // show the request body in the command line
   console.log(req.body);
 
-  // internal server error happens here
   var game = game_model.create(req.body.gameName, req.body.leaderName);
   //
   game.save(function (err) {
     if (err) res.status(403).send(err.message);
-    // else res.redirect(301, '/play/' + req.body.gameName); // redirect from the server won't work.
-    // has to be done on the client side.
+    // else res.redirect(301, '/play/' + req.body.gameName); // redirect from server won't work. It has to be done on the client side.
   });
 
   // return a json response to angular

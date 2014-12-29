@@ -28,6 +28,10 @@ angular
         templateUrl: 'views/newgame.html',
         controller: 'newGameCtrl'
       })
+      .when('/play/:channel', {
+        templateUrl: 'views/play.html',
+        controller: 'PlayCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
