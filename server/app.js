@@ -19,6 +19,7 @@ var debug = require('debug'),
 var express = require('express'),
   io = require('socket.io'),
   http = require('http'),
+  newgame = require('./routes/newgame'),
   app = express(),
   cookieParser = require('cookie-parser'),
   bodyParser = require('body-parser'),
@@ -33,8 +34,8 @@ var express = require('express'),
 
 
 
-// /*** Model ***/
-// var game_model = require('./model/game');
+/*** Model ***/
+var game_model = require('./model/game');
 //
 // /*** Traditional Routing ***/
 // // Display the starting page
@@ -191,5 +192,6 @@ if (app.get('env') === 'production') {
   });
 }
 
+app.use('/newgame', newgame);
 
 module.exports = app;

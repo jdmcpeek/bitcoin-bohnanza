@@ -26,7 +26,7 @@ angular
       })
       .when('/newgame', {
         templateUrl: 'views/newgame.html',
-        controller: 'NewgameCtrl'
+        controller: 'newGameCtrl'
       })
       .otherwise({
         redirectTo: '/'

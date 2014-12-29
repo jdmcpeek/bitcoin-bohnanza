@@ -2,16 +2,31 @@
 
 /**
  * @ngdoc function
- * @name weBohnanzaApp.controller:NewgameCtrl
+ * @name weBohnanzaApp.controller:newGameCtrl
  * @description
- * # NewgameCtrl
+ * # newGameCtrl
  * Controller of the weBohnanzaApp
  */
 angular.module('weBohnanzaApp')
-  .controller('NewgameCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('newGameCtrl', function ($scope, $http, $window) {
+    var newGame = $scope.newGame = {};
+
+    newGame.createGame = function(){
+      console.log(newGame);
+
+      var request = $http.post('/newgame', newGame);
+
+      request.success(function (data) {
+        console.log(data.msg);
+        // redirect to the /play page on success
+        $window.location = '/play/' + newGame.gameName; // TODO: create a template for all urls matching this pattern
+      });
+
+      request.error(function (data) {
+        console.log(data.msg);
+        console.log('failure to reach success block');
+      });
+
+    };
+
   });

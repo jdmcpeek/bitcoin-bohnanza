@@ -1,9 +1,13 @@
-<div class="newgame-container">
+<div class="newgame-container" ng-controller="newGameCtrl">
   <div class="col-md-12">
     <h2 class="newgame-header">Generate a new game here</h2>
 
     <br>
   </div>
+
+  <ul>
+    <li ng-repeat="awe in awesomeThings">{{awe}}</li>
+  </ul>
 
   <div class="newgame-form">
 
@@ -14,7 +18,7 @@
       <div class="form-group">
         <label class="col-md-4 control-label" for="gameName">Game Name</label>
         <div class="col-md-5">
-          <input id="gameName" name="gameName" type="text" placeholder="Bohnanza Bitches" class="form-control input-md">
+          <input id="gameName" name="gameName" ng-model="newGame.gameName" type="text" placeholder="Bohnanza Bitches" class="form-control input-md">
 
         </div>
       </div>
@@ -23,7 +27,7 @@
       <div class="form-group">
         <label class="col-md-4 control-label" for="leaderName">Leader Name</label>
         <div class="col-md-5">
-          <input id="leaderName" name="leaderName" type="text" placeholder="David 'I want to go to the party' McGeek" class="form-control input-md">
+          <input id="leaderName" name="leaderName" ng-model="newGame.leaderName" type="text" placeholder="David 'I want to go to the party' McGeek" class="form-control input-md">
 
         </div>
       </div>
@@ -33,7 +37,7 @@
       <div class="form-group">
         <label class="col-md-4 control-label" for="createGame"></label>
         <div class="col-md-5">
-          <button id="createGame" name="createGame" class="btn btn-success btn-block">Start Playing!</button>
+          <button id="createGame" name="createGame" ng-click="newGame.createGame()" class="btn btn-success btn-block">Start Playing!</button>
         </div>
       </div>
 
