@@ -6,7 +6,7 @@ var game_model = require('../model/game');
 // Initialize the Router
 var router = express.Router();
 
-router.get('/', function(req, res){
+router.get('/:channel', function(req, res){
   console.log('is this thing on?');
 
   game_model.findOne({
@@ -23,3 +23,6 @@ router.get('/', function(req, res){
     }
   });
 });
+
+// expose the module
+module.exports = router;

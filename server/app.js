@@ -194,6 +194,6 @@ if (app.get('env') === 'production') {
 }
 
 app.use('/newgame', newgame);
-app.use('/:channel', play);
+app.use('/getchannel', play);
 
 module.exports = app;

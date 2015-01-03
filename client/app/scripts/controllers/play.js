@@ -31,9 +31,11 @@ angular.module('weBohnanzaApp')
       - add a 'waiting for load' animation... loading the game object will probably take longer than loading the frontend stuff.
 
      */
-     var urlChannel = $location.absUrl();
+     var urlArray = $location.absUrl().split('/');
+     var urlChannel = urlArray[urlArray.length - 1];
      console.log(urlChannel);
-     var request = $http.get($location.path());
+
+     var request = $http.get('/getchannel/' + urlChannel);
      request.success(function(data){
        console.log(data);
      });
