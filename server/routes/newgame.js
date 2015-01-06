@@ -31,6 +31,8 @@ router.post('/', function (req, res) {
   res.json({
     'msg': 'success!'
   });
+
+  // do I have to end the response?
 });
 
 

@@ -33,6 +33,9 @@ var express = require('express'),
 var newgame = require('./routes/newgame');
 var play = require('./routes/play');
 
+io.on('connection', function(socket) {
+  console.log('client connected');
+});
 
 
 /*** Model ***/

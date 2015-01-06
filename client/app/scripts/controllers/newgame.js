@@ -19,7 +19,7 @@ angular.module('weBohnanzaApp')
       request.success(function (data) {
         console.log(data.msg);
         // redirect to the /play page on success
-        $window.location = '/play/' + newGame.gameName; // TODO: create a template for all urls matching this pattern
+        $window.location = '/#/play/' + newGame.gameName; // TODO: create a template for all urls matching this pattern
       });
 
       request.error(function (data) {

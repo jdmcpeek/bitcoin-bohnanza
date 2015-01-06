@@ -35,9 +35,10 @@ angular.module('weBohnanzaApp')
      var urlChannel = urlArray[urlArray.length - 1];
      console.log(urlChannel);
 
-     var request = $http.get('/getchannel/' + urlChannel);
+     var request = $http.get('/getchannel/' + urlChannel); // add player ID to limit data received? Enable cheating by writing query strings to confuse the server and send all game info
      request.success(function(data){
        console.log(data);
+       $scope.gameObject = data.game;
      });
 
 
