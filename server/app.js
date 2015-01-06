@@ -14,29 +14,44 @@ var debug = require('debug'),
   },
   logger = require('morgan');
 
+/*** Database & Model ***/
+var mongoose = require('mongoose'),
+  db = mongoose.connection,
+  params = 'mongodb://localhost/test';
 
+mongoose.connect(params);
+db.on('error', error.bind(error, 'connection error with ' + params));
+
+/* App */
 var express = require('express'),
-  io = require('socket.io'),
-  http = require('http'),
-  app = express(),
-  cookieParser = require('cookie-parser'),
-  bodyParser = require('body-parser'),
-  path = require('path'),
-  server = http.createServer(app),
-  io = io.listen(server);
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({
-    extended: false
-  }));
-  app.use(cookieParser());
+    app = express(),
+    server = require('http').createServer(app),
+    io = require('socket.io')(server);
+
+var cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    path = require('path');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
+app.use(cookieParser());
+
 
 var newgame = require('./routes/newgame');
 var play = require('./routes/play');
 
 io.on('connection', function(socket) {
-  console.log('client connected');
+  log('client connected');
+
+  socket.emit('alert', { hello: 'world' });
 });
 
+
+/**
+ * All this routing shit belongs in different files. NO MORE CLUTTER! NO MORE CLUTTER! NO MORE CLUTTER!
+ */
 
 /*** Model ***/
 var game_model = require('./model/game');
@@ -196,7 +211,19 @@ if (app.get('env') === 'production') {
   });
 }
 
+
 app.use('/newgame', newgame);
 app.use('/getchannel', play);
 
-module.exports = app;
+app.set('port', process.env.PORT || 3000);
+
+//once the database connection is established we can start the web-app
+db.on('open', function() {
+  log('connected to database ' + params);
+  var server = app.listen(app.get('port'), function(err) {
+    if(err) error('Failed to listen on port ' + server.address().port);
+    var msg = 'Express server listening on port ' + server.address().port;
+    log(msg);
+    io.listen(server, log('io is listening as well'));
+  });
+});

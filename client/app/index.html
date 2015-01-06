@@ -91,6 +91,9 @@
         <script src="bower_components/socket.io-client/socket.io.js"></script>
         <script>
         var socket = io();
+        io.on('alert', function(data){
+          alert(data.hello);
+        });
         </script>
 
         <!-- endbuild -->

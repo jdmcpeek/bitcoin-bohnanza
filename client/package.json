@@ -2,7 +2,7 @@
   "name": "weBohnanza",
   "version": "0.0.0",
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "node app.js",
     "test": "mocha"
   },
   "dependencies": {
